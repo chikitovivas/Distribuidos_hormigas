@@ -23,9 +23,11 @@ $(document).ready(function () {
 		    method : "GET",
 		    url: "/creador/comida_reina",
 		    //dataType: "json",
-		    data : {comida : document.getElementById('comida').value, cantidad:100},
+		    data : {comida : document.getElementById('comida').value, cantidad:10, id:1},
 		    success : function(json){
-				alert(json.comida);	        	         
+				alert(JSON.stringify(json));
+				console.log(JSON.stringify(json.almacenes[0].depositos[0].capacidadActual));	
+
 		    },error:function(){ 
 		        alert("error!!!!");
 		    },
