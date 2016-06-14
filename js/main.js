@@ -54,6 +54,31 @@ $(document).ready(function () {
 
 
 
-function actualizar(){
+function actualizar_tablapedidos(){
+    
+}
+
+
+
+function actualizar_tablalmacenes(){
+    var tabla = document.getElementById("tablalmacenes");
+    var json;
+    
+    document.getElementById("m1").value = json.almacenes[0].depositos[0].comida[0].peso;
+    document.getElementById("m2").value = json.almacenes[1].depositos[0].comida[0].peso;
+    document.getElementById("m3").value = json.almacenes[2].depositos[0].comida[0].peso;
+    document.getElementById("p1").value = json.almacenes[0].depositos[1].comida[0].peso;
+    document.getElementById("p2").value = json.almacenes[1].depositos[1].comida[0].peso;
+    document.getElementById("p3").value = json.almacenes[2].depositos[1].comida[0].peso;
+    document.getElementById("n1").value = json.almacenes[0].depositos[1].comida[0].peso;
+    document.getElementById("n2").value = json.almacenes[1].depositos[2].comida[0].peso;
+    document.getElementById("n3").value = json.almacenes[2].depositos[2].comida[0].peso;
+    document.getElementById("pa1").value = json.almacenes[0].depositos[2].comida[0].peso;
+    document.getElementById("pa2").value = json.almacenes[1].depositos[3].comida[0].peso;
+    document.getElementById("pa3").value = json.almacenes[2].depositos[3].comida[0].peso;
+    document.getElementById("b1").value = json.almacenes[0].depositos[4].comida[0].peso;
+    document.getElementById("b2").value = json.almacenes[1].depositos[4].comida[0].peso;
+    document.getElementById("b3").value = json.almacenes[2].depositos[4].comida[0].peso;
+    
     
 }
