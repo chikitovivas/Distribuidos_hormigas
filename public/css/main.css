@@ -1,0 +1,47 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+
+
+.img{
+    max-width: 100%;
+    
+}
+
+#tablapedidos {
+     overflow-y: scroll;
+     overflow-x: hidden;
+    /* height: 200px;*/
+     background-color: #b2d7b4;
+     border-collapse: collapse;
+     border-spacing: 0rem;
+     VALIGN:MIDDLE; 
+     border: solid 0.1rem;
+     border-color: #bbb;
+     text-ALIGN:CENTER;
+    
+}
+
+#tablafrutas {
+     
+     VALIGN:MIDDLE; 
+     text-ALIGN:CENTER;
+    
+}
+
+/* Estilo por defecto */
+ 
+input:required:invalid {
+ 
+border: 1px solid red;
+ 
+}
+ 
+input:required:valid {
+ 
+border: 1px solid green;
+ 
+}

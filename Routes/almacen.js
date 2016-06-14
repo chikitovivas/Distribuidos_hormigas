@@ -15,8 +15,8 @@ var eurecaServer = new Eureca.Server();
 	Inicializando
 */
 var almacenes = objetos.almacenes;
-var comidas = [new objetos.comida("manzana",0), new objetos.comida("pera",0), new objetos.comida("naranja",0)
-, new objetos.comida("patilla",0), new objetos.comida("banana",0)];
+var comidas = [new objetos.comida("Manzana",0), new objetos.comida("Pera",0), new objetos.comida("Naranja",0)
+, new objetos.comida("Patilla",0), new objetos.comida("Banana",0)];
 var depositos = [new objetos.deposito(comidas[0],500,150,500), new objetos.deposito(comidas[1],500,150,500), new objetos.deposito(comidas[2],500,150,500)
 , new objetos.deposito(comidas[3],500,150,500), new objetos.deposito(comidas[4],500,150,500)] 
 

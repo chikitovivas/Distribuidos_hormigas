@@ -15,6 +15,8 @@
     "engine.io": "^1.6.9",
     "engine.io-client": "^1.6.9",
     "eureca.io": "^0.6.42",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "express-stormpath": "^3.1.2",
+    "jade": "^1.11.0"
   }
 }
