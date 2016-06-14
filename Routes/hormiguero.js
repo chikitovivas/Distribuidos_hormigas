@@ -8,48 +8,38 @@ var express = require('express'),
     app = express(), 
     server = require('http').createServer(app),
     Eureca = require('eureca.io');
+
 var events = require('events');
+var path = require("path");
+
 var eventEmitter = new events.EventEmitter();
+
+
 
 var pesoMaximo = 10, 
 	cantidadHormigas = 0;
 
-var html = fs.readFileSync("../index.html");
+var html = fs.readFileSync("../public/index.html");
 /*
 		Inicializacion de los depositos
 */
 var almacenes = funciones.inicializarAlmacenes();
 
-/*console.log(typeof funciones.inicializarAlmacenes);
-
-eventEmitter.on('ready', funciones.inicializarAlmacenes);
-
-eventEmitter.emit('ready');*/
-
-
-//var comida = new objetos.comida('mango',0); //prueba
 
 var itinerarios = [new objetos.itinerario(almacenes[0].puerto,'localhost','/',almacenes[0].id),
 			 new objetos.itinerario(almacenes[1].puerto,'localhost','/',almacenes[1].id), 
 			 new objetos.itinerario(almacenes[2].puerto,'localhost','/',almacenes[2].id)];
 
- /*hor = new objetos.hormiga(comida, pesoMaximo, itinerarios); //prueba
-			client.ready(function (serverProxy) {
-				console.log(hor);
-				serverProxy.hormigaLlega(hor,0,1).onReady(function(result){
-			    		console.log(result);	
-			    });
-			});*/
-
-
+app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
 /*
 	Rutas
 */
 app.listen(8100,function(){
+	//app.use(express.static('public'));
 
 	app.get('/',function(req,res){
-		res.write(html);
-		res.end();
+		res.send(html.toString());
+		//res.end();
 	});
 
 	/*
