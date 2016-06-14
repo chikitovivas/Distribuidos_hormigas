@@ -55,10 +55,12 @@ $(document).ready(function () {
 
 
 function actualizar_tablapedidos(){
+    var actualizado;
+    
+    var tabla = document.getElementById("tablapedidos");
+    
     
 }
-
-
 
 function actualizar_tablalmacenes(){
     var tabla = document.getElementById("tablalmacenes");
@@ -79,6 +81,5 @@ function actualizar_tablalmacenes(){
     document.getElementById("b1").value = json.almacenes[0].depositos[4].comida[0].peso;
     document.getElementById("b2").value = json.almacenes[1].depositos[4].comida[0].peso;
     document.getElementById("b3").value = json.almacenes[2].depositos[4].comida[0].peso;
-    
     
 }
