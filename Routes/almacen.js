@@ -37,12 +37,16 @@ eurecaServer.exports.hormigaLlega = function (hormiga,restante,nroAlmacen) {
 	{
 		if(depositos[i].comida.tipo === hormiga.comida.tipo)
 		{
+			/*
+				Ya se consiguio la comida, se ve si es suficiente
+			*/
 			if(depositos[i].cantidadActual >= restante)
 			{
 				hormiga.comida.peso = restante;
 	    		depositos[i].cantidadActual -= restante; 
-	    		hormiga.inventario[nroAlmacen-1] = depositos;
-
+	    		hormiga.inventario[almacenActual.id-1] = depositos;
+	    		console.log(restante);
+	    		console.log(depositos);
 	    		return {
 						res:1,
 						hormiga:hormiga

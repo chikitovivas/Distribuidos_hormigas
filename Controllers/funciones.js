@@ -30,6 +30,14 @@ function inicializarAlmacenes(){
 
 function actualizarAlmacenes(hormiga,almacenes){
 
+	if(hormiga.inventario[0] !== null)
+		almacenes[0].depositos = hormiga.inventario[0]
+	if(hormiga.inventario[1] !== null)
+		almacenes[1].depositos = hormiga.inventario[1]
+	if(hormiga.inventario[2] !== null)
+		almacenes[2].depositos = hormiga.inventario[2]	
+
+	return almacenes;
 }
 
 module.exports.inicializarAlmacenes = inicializarAlmacenes;
