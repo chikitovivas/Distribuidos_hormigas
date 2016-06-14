@@ -36,7 +36,7 @@ $(document).ready(function () {
             method : "GET",
             url: "/creador/comida_reina",
             //dataType: "json",
-            data : {comida : radiobutton(), cantidad:document.getElementById("cantidadkg").value, id:table.rows.length-1},
+            data : {comida : radiobutton(), cantidad:document.getElementById("cantidadkg").value, id:document.getElementById("tablapedidos").rows.length-1},
             
             success : function(json){
                         alert(JSON.stringify(json));
