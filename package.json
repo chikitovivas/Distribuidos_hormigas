@@ -17,6 +17,7 @@
     "eureca.io": "^0.6.42",
     "express": "^4.13.4",
     "express-stormpath": "^3.1.2",
-    "jade": "^1.11.0"
+    "jade": "^1.11.0",
+    "jquery": "^3.0.0"
   }
 }

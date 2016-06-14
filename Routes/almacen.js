@@ -51,7 +51,7 @@ eurecaServer.exports.hormigaLlega = function (hormiga,restante,nroAlmacen) {
 						res:1,
 						hormiga:hormiga
 			   			};	
-			}else if(queda = depositos[i].cantidadActual - restante === 0){
+			}else if((queda = depositos[i].cantidadActual - restante) === 0){
 				//mandar hormigas a buscar comida, if bandera 0
 				//mandar a Hormiga al otro almacen, sino es el ultimo
 			}else{
