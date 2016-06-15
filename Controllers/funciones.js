@@ -6,8 +6,8 @@ function inicializarAlmacenes(){
 	var almacenes = objetos.almacenes;
 
 	var client_depositos = new Eureca.Client({ uri: 'http://localhost:8010/' });
-	/*var client_depositos2 = new Eureca.Client({ uri: 'http://localhost:8020/' });
-	var client_depositos3 = new Eureca.Client({ uri: 'http://localhost:8030/' });*/
+	var client_depositos2 = new Eureca.Client({ uri: 'http://localhost:8020/' });
+	var client_depositos3 = new Eureca.Client({ uri: 'http://localhost:8030/' });
 	client_depositos.ready(function (serverProxy) {
 		serverProxy.getDepositos().onReady(function(result){
 	    		almacenes[0].depositos = result;
@@ -22,8 +22,8 @@ function inicializarAlmacenes(){
 		serverProxy.getDepositos().onReady(function(result){
 	    		almacenes[2].depositos = result;
 	    });
-	});*/
-
+	});
+*/
 	return almacenes;
 }
 

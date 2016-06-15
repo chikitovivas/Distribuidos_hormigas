@@ -11,6 +11,7 @@ var express = require('express'),
 
 var events = require('events');
 var path = require("path");
+var co = require('co');
 
 var eventEmitter = new events.EventEmitter();
 
@@ -52,12 +53,12 @@ app.listen(8100,function(){
 			cantidad = opciones.cantidad;
 
 		if(cantidad <= pesoMaximo){
-			hor = new objetos.hormiga(comida, pesoMaximo, itinerarios);
+			hor = new objetos.hormiga(comida, pesoMaximo, itinerarios, cantidad, [null,null,null]);
 			/*
 				Hormiga doing
 			*/
 			client.ready(function (serverProxy) {
-				serverProxy.hormigaLlega(hor,cantidad,almacenes[0].id).onReady(function(result){		
+				serverProxy.hormigaLlega(hor,almacenes[0].id).onReady(function(result){		
 		    			res.jsonp({
 							respuesta:result.res,
 							almacenes:funciones.actualizarAlmacenes(result.hormiga,almacenes),
@@ -67,59 +68,63 @@ app.listen(8100,function(){
 			    });
 			});
 		}else{
-			var cantidad_hormigas = cantidad / pesoMaximo; 
-			var todoBien = 1;
-			var cantidadComida = 0;
-			for (var i = cantidad_hormigas - 1; i >= 0; i--) {
-				hor = new objetos.hormiga(comida, pesoMaximo, itinerarios);
-				cantidadHormigas++;
-				client.ready(function (serverProxy) {
-					serverProxy.hormigaLlega(hor,pesoMaximo,almacenes[0].id).onReady(function(result){		
-						if(result.res === 0 || result.res === -1)
-							todoBien = result.res;
-				    	cantidadHormigas--;
-				    	cantidadComida += result.hormiga.comida.peso;
-				    });
-				});
-			}
-			console.log(cantidad + "");
-			console.log(cantidad % pesoMaximo + "");
-			if((resto = cantidad % pesoMaximo) !== 0){
-				hor = new objetos.hormiga(comida, pesoMaximo, itinerarios);
-				cantidadHormigas++;
-				client.ready(function (serverProxy) {
-					console.log(resto);
-					serverProxy.hormigaLlega(hor,resto,almacenes[0].id).onReady(function(result){		
-						if(result.res === 0 || result.res === -1)
-							todoBien = result.res;
-				    	cantidadHormigas--;
-				    	cantidadComida += result.hormiga.comida.peso;
-				    	res.jsonp({
-							respuesta:result.res,
-							almacenes:funciones.actualizarAlmacenes(result.hormiga,almacenes),
-							id:opciones.id
-						});
-						res.end();	
-				    });
-				});
-			}else{
-				hor = new objetos.hormiga(comida, pesoMaximo, itinerarios);
-				cantidadHormigas++;
-				client.ready(function (serverProxy) {
-					serverProxy.hormigaLlega(hor,0,almacenes[0].id).onReady(function(result){		
-						if(result.res === 0 || result.res === -1)
-							todoBien = result.res;
-				    	cantidadHormigas--;
-				    	cantidadComida += result.hormiga.comida.peso;
-				    	res.jsonp({
-							respuesta:result.res,
-							almacenes:funciones.actualizarAlmacenes(result.hormiga,almacenes),
-							id:opciones.id
-						});
-						res.end();	
-				    });
-				});
-			}
+			co(function(){
+				var cantidad_hormigas = cantidad / pesoMaximo; 
+				var todoBien = 1;
+				var cantidadComida = 0;
+				for (var i = cantidad_hormigas - 1; i >= 0; i--) {
+					hor = new objetos.hormiga(comida, pesoMaximo, itinerarios,pesoMaximo,[null,null,null]);
+					console.log(hor);
+					cantidadHormigas++;
+					client.ready(function (serverProxy) {
+						serverProxy.hormigaLlega(hor,almacenes[0].id).onReady(function(result){		
+							if(result.res === 0 || result.res === -1)
+								todoBien = result.res;
+					    	cantidadHormigas--;
+					    	//cantidadComida += result.hormiga.comida.peso;
+					    });
+					});
+				}
+				console.log(cantidad + "");
+				console.log(cantidad % pesoMaximo + "");
+			}).then(function(result){
+				if((resto = cantidad % pesoMaximo) !== 0){
+					hormi = new objetos.hormiga(comida, pesoMaximo, itinerarios, resto, [null,null,null]);
+					cantidadHormigas++;
+					client.ready(function (serverProxy) {
+						console.log(resto);
+						serverProxy.hormigaLlega(hormi,almacenes[0].id).onReady(function(result){		
+							if(result.res === 0 || result.res === -1)
+								todoBien = result.res;
+					    	cantidadHormigas--;
+					    	//cantidadComida += result.hormiga.comida.peso;
+					    	res.jsonp({
+								respuesta:result.res,
+								almacenes:funciones.actualizarAlmacenes(result.hormiga,almacenes),
+								id:opciones.id
+							});
+							res.end();	
+					    });
+					});
+				}else{
+					horm = new objetos.hormiga(comida, pesoMaximo, itinerarios, 0, [null,null,null]);
+					cantidadHormigas++;
+					client.ready(function (serverProxy) {
+						serverProxy.hormigaLlega(horm,almacenes[0].id).onReady(function(result){		
+							if(result.res === 0 || result.res === -1)
+								todoBien = result.res;
+					    	cantidadHormigas--;
+					    	//cantidadComida += result.hormiga.comida.peso;
+					    	res.jsonp({
+								respuesta:result.res,
+								almacenes:funciones.actualizarAlmacenes(result.hormiga,almacenes),
+								id:opciones.id
+							});
+							res.end();	
+					    });
+					});
+				}
+			})
 		}
 	})
 });

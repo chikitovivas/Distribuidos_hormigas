@@ -8,6 +8,8 @@ var express = require('express'),
     server = require('http').createServer(app),
     Eureca = require('eureca.io');
 
+var co = require('co');
+
 var eurecaServer = new Eureca.Server();
 
 
@@ -20,54 +22,65 @@ var comidas = [new objetos.comida("Manzana",0), new objetos.comida("Pera",0), ne
 var depositos = [new objetos.deposito(comidas[0],500,150,500), new objetos.deposito(comidas[1],500,150,500), new objetos.deposito(comidas[2],500,150,500)
 , new objetos.deposito(comidas[3],500,150,500), new objetos.deposito(comidas[4],500,150,500)] 
 
-var almacenActual = almacenes[0];
+var almacenActual = almacenes[0]; //AQUI
+almacenActual.depositos = depositos;
 
+var client2 = new Eureca.Client({ uri: 'http://localhost:8020/' });
+var client3 = new Eureca.Client({ uri: 'http://localhost:8030/' });
 var banderea = 0;
 /*
 	RPC
 */
 /*Servidor*/
 
-
 eurecaServer.attach(server);
 
-eurecaServer.exports.hormigaLlega = function (hormiga,restante,nroAlmacen) {
+eurecaServer.exports.hormigaLlega = function (hormiga,nroAlmacen) {
 	console.log("Llega hormiga");
-	for (var i = depositos.length - 1; i >= 0; i--) 
-	{
-		if(depositos[i].comida.tipo === hormiga.comida.tipo)
-		{
-			/*
-				Ya se consiguio la comida, se ve si es suficiente
-			*/
-			if(depositos[i].cantidadActual >= restante)
-			{
-				hormiga.comida.peso = restante;
-	    		depositos[i].cantidadActual -= restante; 
-	    		hormiga.inventario[almacenActual.id-1] = depositos;
-	    		console.log(restante);
-	    		console.log(depositos);
-	    		return {
-						res:1,
-						hormiga:hormiga
-			   			};	
-			}else if((queda = depositos[i].cantidadActual - restante) === 0){
-				//mandar hormigas a buscar comida, if bandera 0
-				//mandar a Hormiga al otro almacen, sino es el ultimo
-			}else{
-				hormiga.comida.peso = depositos[i].cantidadActual;
-				//mandar hormigas a buscar comida, if bandera 0
-				//mandar a Hormiga al otro almacen, sino es el ultimo
-			}
+	hor = new objetos.hormiga(hormiga.comida,hormiga.pesoMaximo,hormiga.itinerario,hormiga.pendiente,hormiga.inventario);
 
-		}	
-	}
-    
+	//co(hor.agarrarComida(almacenActual)).then(function (value) {
+		//almacenActual = value;
+		console.log(hor);
+		almacenActual = hor.agarrarComida(almacenActual);
+		//this.setTimeout(function(){console.log(esperando)},1000);
+		if(hor.pendiente === 0){
+			return {res:1, hormiga:hor}
+		}else{
+			if(nroAlmacen === 1){	
+			 	client2.ready(function (serverProxy) {
+					serverProxy.hormigaLlega(hor,2).onReady(function(result){		
+		    			return{
+							res:result.res,
+							hormiga:result.hormiga
+						};					
+				    });
+				});
+			}else if(nroAlmacen === 2){
+				client3.ready(function (serverProxy) {
+					serverProxy.hormigaLlega(hor,3).onReady(function(result){		
+		    			return{
+							res:result.res,
+							hormiga:result.hormiga
+						};					
+				    });
+				});
+			}else{	//Es porque estoy en el almacen 3 y lo que pidio la hormiga no esta disponible
+			    return{
+					res:0,
+					hormiga:hor
+				};	
+			}
+		}   
+	/*}, function (err) {
+	  console.error(err.stack);
+	});*/
+//do buscar comida if() 
 };
 
 eurecaServer.exports.getDepositos = function(){
 	console.log("llega depositos");
-	return depositos;
+	return almacenActual.depositos;
 };	
 
 server.listen(almacenActual.puerto);
