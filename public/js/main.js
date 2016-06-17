@@ -36,17 +36,17 @@ $(document).ready(function () {
             method : "GET",
             url: "/creador/comida_reina",
             //dataType: "json",
-            data : {comida : radiobutton(), cantidad:document.getElementById("cantidadkg").value, id:document.getElementById("tablapedidos").rows.length-1},
+            data : {comida : radiobutton(), cantidad:document.getElementById("cantidadkg").value, id:document.getElementById("tablapedidos").rows.length},
             
             success : function(json){
                         alert(JSON.stringify(json));
-                        //console.log(JSON.stringify(json.almacenes[0].depositos[0].cantidadActual));	
-            
+                        console.log(JSON.stringify(json.almacenes[0]));
+                        console.log(JSON.stringify(json.almacenes[0].depositos[0]));	           
             agregarfila();
             actualizar_tablalmacenes(json);
                         
             },error:function(){ 
-                alert("error!!!!");
+                //alert("error!!!!");
             },
                 async:   true
             });

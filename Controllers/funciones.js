@@ -13,7 +13,7 @@ function inicializarAlmacenes(){
 	    		almacenes[0].depositos = result;
 	    });
 	});
-	/*client_depositos2.ready(function (serverProxy) {
+	client_depositos2.ready(function (serverProxy) {
 		serverProxy.getDepositos().onReady(function(result){
 	    		almacenes[1].depositos = result;
 	    });
@@ -23,7 +23,7 @@ function inicializarAlmacenes(){
 	    		almacenes[2].depositos = result;
 	    });
 	});
-*/
+
 	return almacenes;
 }
 
@@ -40,7 +40,9 @@ function actualizarAlmacenes(hormiga,almacenes){
 	return almacenes;
 }
 
+
 module.exports.inicializarAlmacenes = inicializarAlmacenes;
 
 module.exports.actualizarAlmacenes = actualizarAlmacenes;
+
 
