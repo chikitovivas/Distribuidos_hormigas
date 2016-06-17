@@ -11,7 +11,6 @@ var express = require('express'),
 
 var events = require('events');
 var path = require("path");
-var co = require('co');
 
 var eventEmitter = new events.EventEmitter();
 
@@ -115,7 +114,7 @@ eurecaServer.exports.hormigaLlegaFull = function (hormiga) {
 	cantidadHormigasActivas--;
 	sumar += hormiga.comida.peso;
 	console.log(peticionesReina[hormiga.idPeticion].cantidadHormigas + "i");
-	
+
 	if(peticionesReina[hormiga.idPeticion].pendiente <= 0){
 		console.log("Ya hormiga reina obtuvo: "+ peticionesReina[hormiga.idPeticion].id);
 		/*console.log(sumar);
@@ -138,30 +137,5 @@ server.listen(8200);
 
 
 
-/*
-		while(flag){
-			console.log("i: "+i);
-			var pedir0 = Math.floor(Math.random() * (1 - 1) + 1);
-			var pedir1 = Math.floor(Math.random() * (cantidadHormigasActivas - 1) + 1);
-			if(cantidadHormigasActivas === 0)
-				pendiente = pedir0;
-			else
-				pendiente = pedir1;
-
-			cantidadHormigasActivas++;
-			peticionesReina[peticionActual].cantidadHormigas++;
-			
-			arrayHormigas[i] = new objetos.hormiga(comida, pendiente, itinerarios, pendiente, [null,null,null],peticionActual)];
-
-			peticionesReina[peticionActual].pendienteEnviado += pendiente;
-
-			if(peticionesReina[peticionActual].pendienteEnviado >= cantidad){
-				flag = 0;
-				client.ready(function (serverProxy) {	
-					serverProxy.hormigaLlega(arrayHormigas,1);
-				});
-			}	
-			i++;	
-		}*/
 
  
