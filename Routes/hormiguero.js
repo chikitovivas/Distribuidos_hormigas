@@ -31,8 +31,8 @@ var itinerarios = [new objetos.itinerario(almacenes[0].puerto,'localhost','/',al
 			 new objetos.itinerario(almacenes[1].puerto,'localhost','/',almacenes[1].id), 
 			 new objetos.itinerario(almacenes[2].puerto,'localhost','/',almacenes[2].id)];
 
-app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
-//app.use(express.static('C:/Users/Administrador/Documents/NetBeansProjects/Distribuidos_hormigas/public'));
+//app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
+app.use(express.static('C:/Users/Administrador/Documents/NetBeansProjects/Distribuidos_hormigas/public'));
 
 var peticionesReina = new Array();
 var cantidadPeticiones = 0;
@@ -114,7 +114,7 @@ eurecaServer.exports.hormigaLlegaFull = function (hormiga) {
 	cantidadHormigasActivas--;
 	sumar += hormiga.comida.peso;
 	console.log(peticionesReina[hormiga.idPeticion].cantidadHormigas + "i");
-
+	
 	if(peticionesReina[hormiga.idPeticion].pendiente <= 0){
 		console.log("Ya hormiga reina obtuvo: "+ peticionesReina[hormiga.idPeticion].id);
 		/*console.log(sumar);
@@ -129,6 +129,13 @@ eurecaServer.exports.hormigaLlegaFull = function (hormiga) {
 		console.log(peticionesReina[hormiga.idPeticion].pendiente );
 		sumar = 0;*/
 		//mandar a cliente respuesta con eureca
+
+		/*var client = connection.clientProxy;
+    
+ 
+ 		   client.peticionlista();
+
+		*/
 	}
 };
 
@@ -137,5 +144,30 @@ server.listen(8200);
 
 
 
+/*
+		while(flag){
+			console.log("i: "+i);
+			var pedir0 = Math.floor(Math.random() * (1 - 1) + 1);
+			var pedir1 = Math.floor(Math.random() * (cantidadHormigasActivas - 1) + 1);
+			if(cantidadHormigasActivas === 0)
+				pendiente = pedir0;
+			else
+				pendiente = pedir1;
+
+			cantidadHormigasActivas++;
+			peticionesReina[peticionActual].cantidadHormigas++;
+			
+			arrayHormigas[i] = new objetos.hormiga(comida, pendiente, itinerarios, pendiente, [null,null,null],peticionActual)];
+
+			peticionesReina[peticionActual].pendienteEnviado += pendiente;
+
+			if(peticionesReina[peticionActual].pendienteEnviado >= cantidad){
+				flag = 0;
+				client.ready(function (serverProxy) {	
+					serverProxy.hormigaLlega(arrayHormigas,1);
+				});
+			}	
+			i++;	
+		}*/
 
  
