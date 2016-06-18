@@ -102,9 +102,21 @@ app.listen(8100,function(){
 	RPC
 */
 /*Servidor*/
-var eurecaServer = new Eureca.Server();
+var eurecaServer = new Eureca.Server({allow : ['tchat.welcome', 'tchat.send']});
+var connections = {};
+var browser;
 
 eurecaServer.attach(server);
+
+eurecaServer.onConnect(function (connection) {
+    console.log('New client ', connection.id, connection.eureca.remoteAddress);
+ connections[connection.id] = {nick:null, client:eurecaServer.getClient(connection.id)};
+});
+
+eurecaServer.onDisconnect(function (connection) {    
+    console.log('Client quit', connection.id);
+ delete connections[connection.id];
+});
 
 var sumar = 0;
 //functions under "exports" namespace will be exposed to client side
@@ -131,8 +143,15 @@ eurecaServer.exports.hormigaLlegaFull = function (hormiga) {
 	}
 };
 
-server.listen(8200);
-/*Cliente*/
+var tchatServer = eurecaServer.exports.tchatServer = {};
 
+tchatServer.browser = function (nick) {
+	console.log('Client %s auth with %s', this.connection.id);
+	var id = this.connection.id;
+
+	browser = id;
+}
+
+server.listen(8200);
 
  
