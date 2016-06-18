@@ -110,7 +110,7 @@ eurecaServer.attach(server);
 
 eurecaServer.onConnect(function (connection) {
     console.log('New client ', connection.id, connection.eureca.remoteAddress);
- connections[connection.id] = {nick:null, client:eurecaServer.getClient(connection.id)};
+ 	connections[connection.id] = {nick:null, client:eurecaServer.getClient(connection.id)};
 });
 
 eurecaServer.onDisconnect(function (connection) {    
@@ -130,22 +130,18 @@ eurecaServer.exports.hormigaLlegaFull = function (hormiga) {
 	
 	if(peticionesReina[hormiga.idPeticion].pendiente <= 0){
 		console.log("Ya hormiga reina obtuvo: "+ peticionesReina[hormiga.idPeticion].id);
-		client.ready(function (serverProxy) {
-			serverProxy.peticionlista(hormiga.inventario,peticionesReina[hormiga.idPeticion]);
-		});
+		connections[browser].client.tchat.welcome();
 	}	
 
 	if(peticionesReina[hormiga.idPeticion].cantidadHormigas === 1){
 		console.log("Ya llegaron todas las hormigas");
-		client.ready(function (serverProxy) {
-			serverProxy.peticionlista(hormiga.inventario,peticionesReina[hormiga.idPeticion]);
-		});
+		connections[browser].client.tchat.welcome();
 	}
 };
 
 var tchatServer = eurecaServer.exports.tchatServer = {};
 
-tchatServer.browser = function (nick) {
+tchatServer.browser = function () {
 	console.log('Client %s auth with %s', this.connection.id);
 	var id = this.connection.id;
 
