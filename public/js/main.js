@@ -1,3 +1,7 @@
+var express = require('express')
+  , app = express(app)
+  , server = require('http').createServer(app);
+var Eureca = require('eureca.io');
 
 
 function agregarfila(){
@@ -30,40 +34,15 @@ function radiobutton(){
         return resultado;
 }
 
-$(document).ready(function () {
-  	$('#solicitar').click( function () {
-        $.ajax({
-            method : "GET",
-            url: "/creador/comida_reina",
-            //dataType: "json",
-            data : {comida : radiobutton(), cantidad:document.getElementById("cantidadkg").value, id:document.getElementById("tablapedidos").rows.length},
-            
-            success : function(json){
-                        alert(JSON.stringify(json));
-                        console.log(JSON.stringify(json.almacenes[0]));
-                        console.log(JSON.stringify(json.almacenes[0].depositos[0]));	           
-            agregarfila();
-            actualizar_tablalmacenes(json);
-                        
-            },error:function(){ 
-                //alert("error!!!!");
-            },
-                async:   true
-            });
-	} );
-});
 
-
-
-function actualizar_tablapedidos(){
+function actualizar_tablapedidos(peticion){
     var actualizado;
     
-    var tabla = document.getElementById("tablapedidos");
-    
-    
+    var tabla = document.getElementById("tablapedidos");  
+
 }
 
-function actualizar_tablalmacenes(json){
+function actualizar_tablalmacenes(almacenes){
     
    /* document.getElementById("m1").value = json.almacenes[0].depositos[0].cantidadActual;
     document.getElementById("m2").value = json.almacenes[1].depositos[0].cantidadActual;
@@ -112,7 +91,38 @@ function actualizar_tablalmacenes(json){
                     '<TD id ="m3" width=100 VALIGN=MIDDLE ALIGN=CENTER ><input type="text" value="'+json.almacenes[2].depositos[0].cantidadActual+'"></TD>';
    */
    
-   var nuevoCodigoHtml2 =
+  var nuevoCodigoHtml2 =
+   '<div class="col-md-5" id="divtablapedidos"><TABLE border="1" id="tablalmacenes">'+
+   '<TR><TD width=100 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"> <h4> - </h4>'+
+       '</TD><TD width=300 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"><h4> Almacén 1(KG) </h4></TD>'+
+       '<TD width=300 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"><h4> Almacén 2(KG) </h4></TD>'+
+       '<TD width=300 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"><h4> Almacén 3(KG) </h4></TD>'+
+   '</TR><TR id="man">'+
+       '<TD width=100 VALIGN=MIDDLE ALIGN=CENTER>Manzana</TD>'+
+       '<TD id ="m1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[0].cantidadActual+'"> </TD>'+
+       '<TD id ="m2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[1].depositos[0].cantidadActual+'"> </TD>'+
+       '<TD id ="m3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[2].depositos[0].cantidadActual+'"> </TD>'+
+   '</TR><TR><TD  width=100 VALIGN=MIDDLE ALIGN=CENTER> Pera</TD>'+
+       '<TD id ="p1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[1].cantidadActual+'"></TD>'+
+       '<TD id ="p2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[1].depositos[1].cantidadActual+'"></TD>'+
+       '<TD id ="p3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[2].depositos[1].cantidadActual+'"></TD>'+
+   '</TR><TR><TD width=100 VALIGN=MIDDLE ALIGN=CENTER>Naranja</TD>'+
+       '<TD id ="n1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[2].cantidadActual+'"></TD>'+
+       '<TD id ="n2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[1].depositos[2].cantidadActual+'"></TD>'+
+       '<TD id ="n3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[2].depositos[2].cantidadActual+'"></TD>'+
+   '</TR><TR><TD width=100 VALIGN=MIDDLE ALIGN=CENTER>Patilla</TD>'+
+       '<TD id ="pa1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[3].cantidadActual+'"> </TD>'+
+       '<TD id ="pa2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[1].depositos[3].cantidadActual+'"> </TD>'+
+       '<TD id ="pa3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[2].depositos[3].cantidadActual+'"> </TD>'+
+   '</TR> <TR> <TD width=100 VALIGN=MIDDLE ALIGN=CENTER>Banana</TD>'+
+       '<TD id ="b1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[4].cantidadActual+'"></TD>'+
+       '<TD id ="b2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[1].depositos[4].cantidadActual+'"></TD>'+
+       '<TD id ="b3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[2].depositos[4].cantidadActual+'"></TD></TR>'+
+   '</TABLE></div>';
+
+
+
+   /*var nuevoCodigoHtml2 =
    '<div class="col-md-5" id="divtablapedidos"><TABLE border="1" id="tablalmacenes">'+
    '<TR><TD width=100 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"> <h4> - </h4>'+
        '</TD><TD width=300 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"><h4> Almacén 1(KG) </h4></TD>'+
@@ -141,7 +151,7 @@ function actualizar_tablalmacenes(json){
        '<TD id ="b3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+json.almacenes[0].depositos[4].cantidadActual+'"></TD></TR>'+
    '</TABLE></div>';
    
-   
+   */
    
    
  /*   var nuevoCodigoHtml2 ='<TD width=100 VALIGN=MIDDLE ALIGN=CENTER> Manzana</TD>'+
@@ -151,8 +161,59 @@ function actualizar_tablalmacenes(json){
       
      */ 
     nodoTr.innerHTML = nuevoCodigoHtml2;
-    
-    
-    
-    
 }
+
+
+
+
+$(document).ready(function () {
+    $('#solicitar').click( function () {
+        $.ajax({
+            method : "GET",
+            url: "/creador/comida_reina",
+            //dataType: "json",
+            data : {comida : radiobutton(), cantidad:document.getElementById("cantidadkg").value, id:document.getElementById("tablapedidos").rows.length-1},
+            
+            success : function(respuesta){
+              agregarfila();
+           /* actualizar_tablalmacenes(json);*/
+                        
+            },error:function(){ 
+                //alert("error!!!!");
+            },
+                async:   true
+            });
+  } );
+});
+
+
+var Eureca = require('eureca.io');
+var client = new Eureca.Client({  uri :  'http: // localhost: 8000 /'  });
+
+
+    client.exports.peticionlista = function (almacenes, peticion){ 
+      //respuesta
+      //almacenes:  arreglo de almacenes
+      //peticion: funcion completa de la peticion respondida
+        actualizar_tablapedidos(peticion);
+        actualizar_tablalmacenes(almacenes);
+    }
+
+    
+
+
+
+
+/*Servidor*/
+var eurecaServer = new Eureca.Server();
+
+eurecaServer.attach(server);
+
+eurecaServer.exports.peticionlista = function (almacenes, peticion){
+   //respuesta
+      //almacenes:  arreglo de almacenes
+      //peticion: funcion completa de la peticion respondida
+        actualizar_tablapedidos(peticion);
+        actualizar_tablalmacenes(almacenes);
+    };
+server.listen(8201);

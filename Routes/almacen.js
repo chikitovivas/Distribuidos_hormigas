@@ -51,9 +51,9 @@ eurecaServer.exports.hormigaLlega = function(hormiga,nroAlmacen){
 	almacenActual = hor.agarrarComida(almacenActual);
 	console.log(almacenActual);
 	if(hor.pendiente === 0){
-		enviarHormiga(hor,4);
+		enviarHormiga(hor,4); //4 enviar la hormiga al servidor
 	}else{
-		enviarHormiga(hor,nroAlmacen+1);
+		enviarHormiga(hor,nroAlmacen+1); // Si no, envia la hormiga al otro almcen
 	}
 
 }
@@ -72,22 +72,22 @@ server.listen(almacenActual.puerto);
 
 function enviarHormiga(hormiga,idAlmacen){
 	console.log(hormiga);
-	if(idAlmacen === 4){
+	if(idAlmacen === 4){ //servidor
 		var client = new Eureca.Client({ uri: 'http://localhost:8200/' });
 		client.ready(function (serverProxy) {
 			serverProxy.hormigaLlegaFull(hormiga);
 	    });
-	}else if(idAlmacen === 1){
+	}else if(idAlmacen === 1){// almacen 1
 		var client1 = new Eureca.Client({ uri: 'http://localhost:8010/' });
 		client1.ready(function (serverProxy) {
 			serverProxy.hormigaLlega(hormiga,1);
 	    });
-	}else if(idAlmacen === 2){	
+	}else if(idAlmacen === 2){	// almacen 2
 		var client2 = new Eureca.Client({ uri: 'http://localhost:8020/' });
 		client2.ready(function (serverProxy) {
 			serverProxy.hormigaLlega(hormiga,2);
 	    });
-	}else if(idAlmacen === 3){	
+	}else if(idAlmacen === 3){	// almacen 3
 		var client3 = new Eureca.Client({ uri: 'http://localhost:8030/' });
 		client3.ready(function (serverProxy) {
 			serverProxy.hormigaLlega(hormiga,3);
