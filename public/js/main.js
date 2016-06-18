@@ -1,8 +1,8 @@
-var express = require('express')
+/*var express = require('express')
   , app = express(app)
   , server = require('http').createServer(app);
-var Eureca = require('eureca.io');
-
+var Eureca = require('eureca.io');*/
+//var   src = "/eureca.js";
 
 function agregarfila(){
     var table = document.getElementById("tablapedidos");
@@ -187,27 +187,27 @@ $(document).ready(function () {
 });
 
 
-var Eureca = require('eureca.io');
-var client = new Eureca.Client({  uri :  'http: // localhost: 8000 /'  });
+//var Eureca = require('eureca.io');
+//var client = new Eureca.Client({  uri :  'http: // localhost: 8000 /'  });
 
 
-    client.exports.peticionlista = function (almacenes, peticion){ 
+    /*client.exports.peticionlista = function (almacenes, peticion){ 
       //respuesta
       //almacenes:  arreglo de almacenes
       //peticion: funcion completa de la peticion respondida
         actualizar_tablapedidos(peticion);
         actualizar_tablalmacenes(almacenes);
     }
-
+*/
     
 
 
 
 
 /*Servidor*/
-var eurecaServer = new Eureca.Server();
+var client = new Eureca.Client({ uri: 'http://localhost:8200/' });
 
-eurecaServer.attach(server);
+/*eurecaServer.attach(server);
 
 eurecaServer.exports.peticionlista = function (almacenes, peticion){
    //respuesta
@@ -216,4 +216,4 @@ eurecaServer.exports.peticionlista = function (almacenes, peticion){
         actualizar_tablapedidos(peticion);
         actualizar_tablalmacenes(almacenes);
     };
-server.listen(8201);
+server.listen(8201);*/
