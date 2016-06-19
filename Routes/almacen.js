@@ -24,7 +24,9 @@ var comidas = [new objetos.comida("Manzana",0), new objetos.comida("Pera",0), ne
 var depositos = [new objetos.deposito(comidas[0],500,150,100), new objetos.deposito(comidas[1],500,150,100), new objetos.deposito(comidas[2],500,150,100)
 , new objetos.deposito(comidas[3],500,150,100), new objetos.deposito(comidas[4],500,150,100)] 
 
+<<<<<<< HEAD
 var almacenActual = almacenes[process.argv[2]]; //AQUI
+
 almacenActual.depositos = depositos;
 var banderea = 0;
 var hor = new Array();

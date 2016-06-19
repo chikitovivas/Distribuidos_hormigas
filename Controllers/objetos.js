@@ -13,12 +13,12 @@ hormiga.prototype.agarrarComida = function (almacen) {
 				this.comida.peso = this.pendiente;
 				almacen.depositos[i].cantidadActual -= this.pendiente;
 				this.pendiente = 0;
-				this.inventario[almacen.id-1] = almacen.depositos;
+				this.inventario[almacen.id-1] = almacen;
 			}else{
 				this.comida.peso = almacen.depositos[i].cantidadActual;
 				almacen.depositos[i].cantidadActual = 0
 				this.pendiente -= almacen.depositos[i].cantidadActual;
-				this.inventario[almacen.id-1] = almacen.depositos;
+				this.inventario[almacen.id-1] = almacen;
 			}
 		}
 	}
