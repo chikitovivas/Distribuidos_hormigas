@@ -73,25 +73,25 @@ var nuevoCodigoHtml2 =
        '<TD width=300 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"><h4> Almacén 3(KG) </h4></TD>'+
    '</TR><TR id="man">'+
        '<TD width=100 VALIGN=MIDDLE ALIGN=CENTER>Manzana</TD>'+
-       '<TD id ="m1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[0].depositos[0].cantidadActual+'"> </TD>'+
-       '<TD id ="m2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[1].depositos[0].cantidadActual+'"> </TD>'+
-       '<TD id ="m3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[2].depositos[0].cantidadActual+'"> </TD>'+
+       '<TD id ="m1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[0].depositos[0].cantidadActual+'" disabled> </TD>'+
+       '<TD id ="m2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[1].depositos[0].cantidadActual+'" disabled> </TD>'+
+       '<TD id ="m3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[2].depositos[0].cantidadActual+'" disabled> </TD>'+
    '</TR><TR><TD  width=100 VALIGN=MIDDLE ALIGN=CENTER> Pera</TD>'+
-       '<TD id ="p1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[0].depositos[1].cantidadActual+'"></TD>'+
-       '<TD id ="p2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[1].depositos[1].cantidadActual+'"></TD>'+
-       '<TD id ="p3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[2].depositos[1].cantidadActual+'"></TD>'+
+       '<TD id ="p1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[0].depositos[1].cantidadActual+'" disabled></TD>'+
+       '<TD id ="p2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[1].depositos[1].cantidadActual+'" disabled></TD>'+
+       '<TD id ="p3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[2].depositos[1].cantidadActual+'" disabled></TD>'+
    '</TR><TR><TD width=100 VALIGN=MIDDLE ALIGN=CENTER>Naranja</TD>'+
-       '<TD id ="n1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[0].depositos[2].cantidadActual+'"></TD>'+
-       '<TD id ="n2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[1].depositos[2].cantidadActual+'"></TD>'+
-       '<TD id ="n3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[2].depositos[2].cantidadActual+'"></TD>'+
+       '<TD id ="n1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[0].depositos[2].cantidadActual+'" disabled></TD>'+
+       '<TD id ="n2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[1].depositos[2].cantidadActual+'" disabled></TD>'+
+       '<TD id ="n3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[2].depositos[2].cantidadActual+'" disabled></TD>'+
    '</TR><TR><TD width=100 VALIGN=MIDDLE ALIGN=CENTER>Patilla</TD>'+
-       '<TD id ="pa1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[0].depositos[3].cantidadActual+'"> </TD>'+
-       '<TD id ="pa2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[1].depositos[3].cantidadActual+'"> </TD>'+
-       '<TD id ="pa3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[2].depositos[3].cantidadActual+'"> </TD>'+
+       '<TD id ="pa1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[0].depositos[3].cantidadActual+'" disabled> </TD>'+
+       '<TD id ="pa2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[1].depositos[3].cantidadActual+'" disabled> </TD>'+
+       '<TD id ="pa3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[2].depositos[3].cantidadActual+'" disabled> </TD>'+
    '</TR> <TR> <TD width=100 VALIGN=MIDDLE ALIGN=CENTER>Banana</TD>'+
-       '<TD id ="b1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[0].depositos[4].cantidadActual+'"></TD>'+
-       '<TD id ="b2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[1].depositos[4].cantidadActual+'"></TD>'+
-       '<TD id ="b3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[2].depositos[4].cantidadActual+'"></TD></TR>'+
+       '<TD id ="b1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[0].depositos[4].cantidadActual+'" disabled></TD>'+
+       '<TD id ="b2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[1].depositos[4].cantidadActual+'" disabled></TD>'+
+       '<TD id ="b3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[2].depositos[4].cantidadActual+'" disabled></TD></TR>'+
    '</TABLE></div>';
 
     nodoTr.innerHTML = nuevoCodigoHtml2;
