@@ -25,12 +25,17 @@ var itinerarios = [new objetos.itinerario(almacenes[0].puerto,'localhost','/',al
 			 new objetos.itinerario(almacenes[1].puerto,'localhost','/',almacenes[1].id), 
 			 new objetos.itinerario(almacenes[2].puerto,'localhost','/',almacenes[2].id)];
 
-//app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
-app.use(express.static('C:/Users/Administrador/Documents/NetBeansProjects/Distribuidos_hormigas/public'));
+app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
+//app.use(express.static('C:/Users/Administrador/Documents/NetBeansProjects/Distribuidos_hormigas/public'));
 
 var peticionesReina = new Array();
 var cantidadPeticiones = 0;
 
+var client = new Eureca.Client({ uri: 'http://localhost:8010/' });
+var serverProxy;
+client.ready(function (serverProx) {
+	serverProxy = serverProx;
+});
 /*
 	Rutas
 */
@@ -43,7 +48,6 @@ app.listen(8100,function(){
 	});
 		
 	app.get('/creador/comida_reina', function(req,res){
-		var client = new Eureca.Client({ uri: 'http://localhost:8010/' });
 		var opciones = req.query;
 		var comida = new objetos.comida(opciones.comida+"",0), 
 			cantidad = opciones.cantidad, flag = 1;
@@ -58,7 +62,6 @@ app.listen(8100,function(){
 		
 		console.log(peticionesReina[peticionActual]);
 
-		client.ready(function (serverProxy) {
 			while(flag){
 				console.log("i: "+i);
 				var pedir0 = Math.floor(Math.random() * (1 - 1) + 1);
@@ -85,7 +88,7 @@ app.listen(8100,function(){
 				}	
 				i++;	
 			}
-		});
+		
 		res.jsonp(1);
 		res.end();
 	});
@@ -143,6 +146,8 @@ tchatServer.browser = function () {
 	var id = this.connection.id;
 
 	browser = id;
+
+	return almacenes;
 };
 
 server.listen(8200);
