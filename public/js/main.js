@@ -1,8 +1,4 @@
-/*var express = require('express')
-  , app = express(app)
-  , server = require('http').createServer(app);
-var Eureca = require('eureca.io');*/
-//var   src = "/eureca.js";
+
 
 function agregarfila(){
     var table = document.getElementById("tablapedidos");
@@ -43,78 +39,32 @@ function actualizar_tablapedidos(peticion){
 }
 
 var almacenes_tabla;
-//Idiota de mierda
-//"bahh"
-//"no me importa"
-//Palabras que arrechan.
+
+/****************************************************************/
+//********************IDIOTA DE MIERDA
+//********************"bahh"
+//*********************"no me importa"
+//*********************IMBECIL DE MIERDA
+/**********************************************************************/
+
 
 function actualizar_tablalmacenes(almacenes){
     
     var nodo = document.getElementById("man");
-    //El nodo recibido es SPAN
     var elemento = document.getElementById("m1").value;
-   // elemento.innerHTML = 5;
     
     var nodoTd = nodo.parentNode; //Nodo TD
     var nodoTr = nodoTd.parentNode; //Nodo TR
-    //var nodoContenedorForm = document.getElementById('contenedorForm'); //Nodo DIV
     var nodosEnTr = nodoTr.getElementsByTagName('td');
-   /* var alimento = nodosEnTr[0].textContent; 
-    var calorias = nodosEnTr[1].textContent;
-    var grasas = nodosEnTr[2].textContent; 
-    var proteina = nodosEnTr[3].textContent;
-    var carbohidratos = nodosEnTr[4].textContent; 
-    var opciones = nodosEnTr[5].textContent;*/
-    /*
-    var nuevoCodigoHtml = '<td><input type="text" name="alimento" id="alimento" value="'+alimento+'" size="10"></td>'+
-    '<td><input type="text" name="calorias" id="calorias" value="'+calorias+'" size="5"</td>'+
-    '<td><input type="text" name="grasas" id="grasas" value="'+grasas+'" size="5"</td>'+
-    '<td><input type="text" name="proteina" id="proteina" value="'+proteina+'" size="5"</td>'+
-    '<td><input type="text" name="carbohidratos" id="carbohidratos" value="'+carbohidratos+'" size="5"</td> <td>En edición</td>';
-*/
-
-    almacenes_tabla[0]= almacenes[0];
-    if (!almacenes[1])
-        almacenes_tabla[1]= almacenes[1];
-    if (!almacenes[2])
-        almacenes_tabla[2]= almacenes[2];
-    
  
-    /*var nuevoCodigoHtml2 ='<TD width=100 VALIGN=MIDDLE ALIGN=CENTER> Manzana</TD>'+
-                    '<TD id ="m1" width=100 VALIGN=MIDDLE ALIGN=CENTER ><input type="text" value="'+json.almacenes[0].depositos[0].cantidadActual+'"></TD>'+
-                    '<TD id ="m2" width=100 VALIGN=MIDDLE ALIGN=CENTER ><input type="text" value="'+json.almacenes[1].depositos[0].cantidadActual+'"></TD>'+
-                    '<TD id ="m3" width=100 VALIGN=MIDDLE ALIGN=CENTER ><input type="text" value="'+json.almacenes[2].depositos[0].cantidadActual+'"></TD>';
-   */
-   
-/*  var nuevoCodigoHtml2 =
-   '<div class="col-md-5" id="divtablapedidos"><TABLE border="1" id="tablalmacenes">'+
-   '<TR><TD width=100 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"> <h4> - </h4>'+
-       '</TD><TD width=300 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"><h4> Almacén 1(KG) </h4></TD>'+
-       '<TD width=300 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"><h4> Almacén 2(KG) </h4></TD>'+
-       '<TD width=300 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"><h4> Almacén 3(KG) </h4></TD>'+
-   '</TR><TR id="man">'+
-       '<TD width=100 VALIGN=MIDDLE ALIGN=CENTER>Manzana</TD>'+
-       '<TD id ="m1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[0].cantidadActual+'"> </TD>'+
-       '<TD id ="m2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[0].cantidadActual+'"> </TD>'+
-       '<TD id ="m3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[0].cantidadActual+'"> </TD>'+
-   '</TR><TR><TD  width=100 VALIGN=MIDDLE ALIGN=CENTER> Pera</TD>'+
-       '<TD id ="p1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[1].cantidadActual+'"></TD>'+
-       '<TD id ="p2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[1].cantidadActual+'"></TD>'+
-       '<TD id ="p3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[1].cantidadActual+'"></TD>'+
-   '</TR><TR><TD width=100 VALIGN=MIDDLE ALIGN=CENTER>Naranja</TD>'+
-       '<TD id ="n1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[2].cantidadActual+'"></TD>'+
-       '<TD id ="n2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[2].cantidadActual+'"></TD>'+
-       '<TD id ="n3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[2].cantidadActual+'"></TD>'+
-   '</TR><TR><TD width=100 VALIGN=MIDDLE ALIGN=CENTER>Patilla</TD>'+
-       '<TD id ="pa1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[3].cantidadActual+'"> </TD>'+
-       '<TD id ="pa2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[3].cantidadActual+'"> </TD>'+
-       '<TD id ="pa3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[3].cantidadActual+'"> </TD>'+
-   '</TR> <TR> <TD width=100 VALIGN=MIDDLE ALIGN=CENTER>Banana</TD>'+
-       '<TD id ="b1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[4].cantidadActual+'"></TD>'+
-       '<TD id ="b2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[4].cantidadActual+'"></TD>'+
-       '<TD id ="b3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[4].cantidadActual+'"></TD></TR>'+
-   '</TABLE></div>';*/
 
+    //console.log(" Hola soy almacenes_tabla[] antes de la arrechera: ", almacenes_tabla);
+    almacenes_tabla[0]= almacenes[0];
+    if (almacenes[1] !== null) 
+        almacenes_tabla[1]= almacenes[1];
+    if (almacenes[2] !== null)
+        almacenes_tabla[2]= almacenes[2];
+ 
 var nuevoCodigoHtml2 =
    '<div class="col-md-5" id="divtablapedidos"><TABLE border="1" id="tablalmacenes">'+
    '<TR><TD width=100 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"> <h4> - </h4>'+
@@ -144,14 +94,6 @@ var nuevoCodigoHtml2 =
        '<TD id ="b3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes_tabla[2].depositos[4].cantidadActual+'"></TD></TR>'+
    '</TABLE></div>';
 
-   
-   
- /*   var nuevoCodigoHtml2 ='<TD width=100 VALIGN=MIDDLE ALIGN=CENTER> Manzana</TD>'+
-                    '<TD id ="m1" width=100 VALIGN=MIDDLE ALIGN=CENTER > hfhfthftght </TD>'+
-                    '<TD id ="m2" width=100 VALIGN=MIDDLE ALIGN=CENTER value="6"> gdrhgdrhth </TD>'+
-                    '<TD id ="m3" width=100 VALIGN=MIDDLE ALIGN=CENTER value="4"> hfhfhfhfg </TD>';
-      
-     */ 
     nodoTr.innerHTML = nuevoCodigoHtml2;
 }
 
@@ -180,47 +122,31 @@ $(document).ready(function () {
 });
 
 
-//var Eureca = require('eureca.io');
-//var client = new Eureca.Client({  uri :  'http: // localhost: 8000 /'  });
+/***********/
+/*SERVIDOR*/
+/***********/
 
-
-    /*client.exports.peticionlista = function (almacenes, peticion){ 
-      //respuesta
-      //almacenes:  arreglo de almacenes
-      //peticion: funcion completa de la peticion respondida
-        actualizar_tablapedidos(peticion);
-        actualizar_tablalmacenes(almacenes);
-    }
-*/
-    
-/*Servidor*/
 var client = new Eureca.Client({ uri: 'http://localhost:8200/' });
   var server;
 
 client.ready(function (proxy) {
   server = proxy;
 
-  almacenes_tabla = server.tchatServer.browser();
-  console.log("Soy almacenes_tabla y estoy arrecho: ",JSON.stringify(almacenes_tabla));
+  server.tchatServer.browser().onReady(function(result){ 
+      //console.log("Soy result de almacenes_tabla y estoy triplemente arrecho: ",result);
+      almacenes_tabla=result;
+      //console.log(" Hola soy almacenes_tabla[1].depositos[0].cantidadActual: ", almacenes_tabla[1].depositos[0].cantidadActual);
+
+  });
 });
 
 
 var tchat = client.exports.tchat = {};
  
    tchat.peticionlista = function(almacenes, peticion)
-   {
-        actualizar_tablapedidos(peticion);
-        actualizar_tablalmacenes(almacenes);
-   }
-
-/*eurecaServer.attach(server);
-
-eurecaServer.exports.peticionlista = function (almacenes, peticion){
-   //respuesta
+   {  //respuesta
       //almacenes:  arreglo de almacenes
       //peticion: funcion completa de la peticion respondida
         actualizar_tablapedidos(peticion);
         actualizar_tablalmacenes(almacenes);
-    };
-server.listen(8201);*/
-
+   }
