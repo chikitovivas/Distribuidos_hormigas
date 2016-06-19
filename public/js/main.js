@@ -192,10 +192,6 @@ $(document).ready(function () {
     }
 */
     
-
-
-
-
 /*Servidor*/
 var client = new Eureca.Client({ uri: 'http://localhost:8200/' });
   var server;
