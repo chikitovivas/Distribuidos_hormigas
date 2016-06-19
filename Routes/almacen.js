@@ -45,7 +45,7 @@ client2.ready(function (serverProx) {
 });
 var client3 = new Eureca.Client({ uri: 'http://localhost:8030/' });
 var serverProxy3;
-client2.ready(function (serverProx) {
+client3.ready(function (serverProx) {
 	serverProxy3 = serverProx;
 });
 /*Servidor*/
@@ -91,7 +91,6 @@ function enviarHormiga(hormiga,idAlmacen){
 	}else if(idAlmacen === 2){	// almacen 2
 			serverProxy2.hormigaLlega(hormiga,2);
 	}else if(idAlmacen === 3){	// almacen 3
-			console.log("entro3");
 			serverProxy3.hormigaLlega(hormiga,3);
 	}
 }
