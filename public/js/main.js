@@ -85,7 +85,7 @@ function actualizar_tablalmacenes(almacenes){
                     '<TD id ="m3" width=100 VALIGN=MIDDLE ALIGN=CENTER ><input type="text" value="'+json.almacenes[2].depositos[0].cantidadActual+'"></TD>';
    */
    
-  var nuevoCodigoHtml2 =
+/*  var nuevoCodigoHtml2 =
    '<div class="col-md-5" id="divtablapedidos"><TABLE border="1" id="tablalmacenes">'+
    '<TR><TD width=100 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"> <h4> - </h4>'+
        '</TD><TD width=300 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"><h4> Almacén 1(KG) </h4></TD>'+
@@ -112,8 +112,8 @@ function actualizar_tablalmacenes(almacenes){
        '<TD id ="b1" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[4].cantidadActual+'"></TD>'+
        '<TD id ="b2" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[4].cantidadActual+'"></TD>'+
        '<TD id ="b3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[0].depositos[4].cantidadActual+'"></TD></TR>'+
-   '</TABLE></div>';
-/*
+   '</TABLE></div>';*/
+
 var nuevoCodigoHtml2 =
    '<div class="col-md-5" id="divtablapedidos"><TABLE border="1" id="tablalmacenes">'+
    '<TR><TD width=100 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"> <h4> - </h4>'+
@@ -143,7 +143,7 @@ var nuevoCodigoHtml2 =
        '<TD id ="b3" width=100 VALIGN=MIDDLE ALIGN=CENTER><input type="text" style="text-align:center" value="'+almacenes[2].depositos[4].cantidadActual+'"></TD></TR>'+
    '</TABLE></div>';
 
-   */
+   
    
  /*   var nuevoCodigoHtml2 ='<TD width=100 VALIGN=MIDDLE ALIGN=CENTER> Manzana</TD>'+
                     '<TD id ="m1" width=100 VALIGN=MIDDLE ALIGN=CENTER > hfhfthftght </TD>'+
