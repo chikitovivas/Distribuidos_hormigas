@@ -146,7 +146,7 @@ tchatServer.browser = function () {
 	var id = this.connection.id;
 
 	browser = id;
-
+	console.log(almacenes);
 	return almacenes;
 };
 
