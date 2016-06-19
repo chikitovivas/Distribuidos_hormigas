@@ -9,15 +9,9 @@ var express = require('express'),
     server = require('http').createServer(app),
     Eureca = require('eureca.io');
 
-var events = require('events');
-var path = require("path");
-
-var eventEmitter = new events.EventEmitter();
 
 
-
-var pesoMaximo = 10, 
-	cantidadHormigas = 0,
+var cantidadHormigas = 0,
 	cantidadHormigasActivas = 0;
 
 var html = fs.readFileSync("../public/index.html");

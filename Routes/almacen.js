@@ -7,7 +7,6 @@ var express = require('express'),
     app = express(),
     server = require('http').createServer(app),
     Eureca = require('eureca.io');
-    //Hormiga = require('../Controllers/objetos.js');
 
 
 var eurecaServer = new Eureca.Server();
@@ -22,18 +21,10 @@ var comidas = [new objetos.comida("Manzana",0), new objetos.comida("Pera",0), ne
 var depositos = [new objetos.deposito(comidas[0],500,150,100), new objetos.deposito(comidas[1],500,150,100), new objetos.deposito(comidas[2],500,150,100)
 , new objetos.deposito(comidas[3],500,150,100), new objetos.deposito(comidas[4],500,150,100)] 
 
-
 var almacenActual = almacenes[process.argv[2]]; //AQUI
 almacenActual.depositos = depositos;
 
 var hor = new Array();
-var cantidadHormigas=0;
-		/*client2.ready(function (serverProxy) {
-					serverProxy.getPorfa().onReady(function(result){		
-						console.log(result);				
-				    });
-				});
-*/
 /*
 	RPC
 */
