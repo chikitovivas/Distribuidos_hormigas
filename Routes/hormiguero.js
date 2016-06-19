@@ -104,12 +104,12 @@ var browser;
 eurecaServer.attach(server);
 
 eurecaServer.onConnect(function (connection) {
-    console.log('New client ', connection.id, connection.eureca.remoteAddress);
+    //console.log('New client ', connection.id, connection.eureca.remoteAddress);
  	connections[connection.id] = {nick:null, client:eurecaServer.getClient(connection.id)};
 });
 
 eurecaServer.onDisconnect(function (connection) {    
-    console.log('Client quit', connection.id);
+    //console.log('Client quit', connection.id);
  delete connections[connection.id];
 });
 
