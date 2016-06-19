@@ -38,13 +38,17 @@ function actualizar_tablapedidos(peticion){
 
 }
 
-var almacenes_tabla;
+var almacenes_tabla = new Array();
 
 /****************************************************************/
-//********************IDIOTA DE MIERDA
-//********************"bahh"
-//*********************"no me importa"
-//*********************IMBECIL DE MIERDA
+//********************IDIOTA DE MIERDA***************************
+//********************"bahh"*************************************
+//*********************"no me importa"***************************
+//*********************IMBECIL DE MIERDA*************************
+//*********************ojala te coma el tigre******************** 
+//*********************ojala no haya almuerzo hoy en tu casa ****
+//*********************ojala se te vaya la luz a la hora de GOT**
+//********************* 8-)  **************************************** 
 /**********************************************************************/
 
 
@@ -134,7 +138,8 @@ client.ready(function (proxy) {
 
   server.tchatServer.browser().onReady(function(result){ 
       //console.log("Soy result de almacenes_tabla y estoy triplemente arrecho: ",result);
-      almacenes_tabla=result;
+      //almacenes_tabla=result;
+      actualizar_tablalmacenes(result);
       //console.log(" Hola soy almacenes_tabla[1].depositos[0].cantidadActual: ", almacenes_tabla[1].depositos[0].cantidadActual);
 
   });
