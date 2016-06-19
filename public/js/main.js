@@ -43,6 +43,10 @@ function actualizar_tablapedidos(peticion){
 }
 
 //var almacenes;
+//Idiota de mierda
+//"bahh"
+//"no me importa"
+//Palabras que arrechan.
 
 function actualizar_tablalmacenes(almacenes){
     
