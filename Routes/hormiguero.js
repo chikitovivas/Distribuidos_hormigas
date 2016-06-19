@@ -92,7 +92,8 @@ app.listen(8100,function(){
 				i++;	
 			}
 		});
-		return 1;
+		res.jsonp(1);
+		res.end();
 	});
 
 
@@ -102,7 +103,7 @@ app.listen(8100,function(){
 	RPC
 */
 /*Servidor*/
-var eurecaServer = new Eureca.Server({allow : ['tchat.welcome', 'tchat.send']});
+var eurecaServer = new Eureca.Server({allow : ['tchat.peticionlista']});
 var connections = {};
 var browser;
 
@@ -130,12 +131,14 @@ eurecaServer.exports.hormigaLlegaFull = function (hormiga) {
 	
 	if(peticionesReina[hormiga.idPeticion].pendiente <= 0){
 		console.log("Ya hormiga reina obtuvo: "+ peticionesReina[hormiga.idPeticion].id);
-		connections[browser].client.tchat.welcome();
+		connections[browser].client.tchat.peticionlista(hormiga.inventario, peticionesReina[hormiga.idPeticion]);
+		console.log(JSON.stringify(hormiga.inventario));
 	}	
 
 	if(peticionesReina[hormiga.idPeticion].cantidadHormigas === 1){
 		console.log("Ya llegaron todas las hormigas");
-		connections[browser].client.tchat.welcome();
+		connections[browser].client.tchat.peticionlista(hormiga.inventario, peticionesReina[hormiga.idPeticion]);
+		console.log(JSON.stringify(hormiga.inventario));
 	}
 };
 
@@ -146,7 +149,7 @@ tchatServer.browser = function () {
 	var id = this.connection.id;
 
 	browser = id;
-}
+};
 
 server.listen(8200);
 
