@@ -42,6 +42,8 @@ function actualizar_tablapedidos(peticion){
 
 }
 
+//var almacenes;
+
 function actualizar_tablalmacenes(almacenes){
     
     var nodo = document.getElementById("man");
@@ -66,7 +68,12 @@ function actualizar_tablalmacenes(almacenes){
     '<td><input type="text" name="proteina" id="proteina" value="'+proteina+'" size="5"</td>'+
     '<td><input type="text" name="carbohidratos" id="carbohidratos" value="'+carbohidratos+'" size="5"</td> <td>En edición</td>';
 */
-
+    /*almacenes[0]= almacen[0];
+    if (!almacen[1])
+        almacenes[1]= almacen[1];
+    if (!almacenes[2])
+        almacenes[2]= almacen[2];*/
+    
  
     /*var nuevoCodigoHtml2 ='<TD width=100 VALIGN=MIDDLE ALIGN=CENTER> Manzana</TD>'+
                     '<TD id ="m1" width=100 VALIGN=MIDDLE ALIGN=CENTER ><input type="text" value="'+json.almacenes[0].depositos[0].cantidadActual+'"></TD>'+
