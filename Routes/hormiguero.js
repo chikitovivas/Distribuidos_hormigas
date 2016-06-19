@@ -25,8 +25,8 @@ var itinerarios = [new objetos.itinerario(almacenes[0].puerto,'localhost','/',al
 			 new objetos.itinerario(almacenes[1].puerto,'localhost','/',almacenes[1].id), 
 			 new objetos.itinerario(almacenes[2].puerto,'localhost','/',almacenes[2].id)];
 
-//app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
-app.use(express.static('C:/Users/Administrador/Documents/NetBeansProjects/Distribuidos_hormigas/public'));
+app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
+//app.use(express.static('C:/Users/Administrador/Documents/NetBeansProjects/Distribuidos_hormigas/public'));
 
 var peticionesReina = new Array();
 var cantidadPeticiones = 0;
@@ -116,7 +116,7 @@ eurecaServer.onDisconnect(function (connection) {
 var sumar = 0;
 //functions under "exports" namespace will be exposed to client side
 eurecaServer.exports.hormigaLlegaFull = function (hormiga) {
-	var client = new Eureca.Client({ uri: 'http://localhost:8201/' });
+	//var client = new Eureca.Client({ uri: 'http://localhost:8201/' });
 	peticionesReina[hormiga.idPeticion].pendiente -= hormiga.comida.peso;
 	peticionesReina[hormiga.idPeticion].cantidadHormigas--;
 	cantidadHormigasActivas--;
