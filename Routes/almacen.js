@@ -28,6 +28,26 @@ var hor = new Array();
 /*
 	RPC
 */
+var client = new Eureca.Client({ uri: 'http://localhost:8200/' });
+var serverProxy;
+client.ready(function (serverProx) {
+	serverProxy = serverProx;
+});
+var client1 = new Eureca.Client({ uri: 'http://localhost:8010/' });
+var serverProxy1;
+client1.ready(function (serverProx) {
+	serverProxy1 = serverProx;
+});
+var client2 = new Eureca.Client({ uri: 'http://localhost:8020/' });
+var serverProxy2;
+client2.ready(function (serverProx) {
+	serverProxy2 = serverProx;
+});
+var client3 = new Eureca.Client({ uri: 'http://localhost:8030/' });
+var serverProxy3;
+client2.ready(function (serverProx) {
+	serverProxy3 = serverProx;
+});
 /*Servidor*/
 
 eurecaServer.attach(server);
@@ -63,27 +83,16 @@ eurecaServer.exports.getPorfa = function(){
 server.listen(almacenActual.puerto);
 
 function enviarHormiga(hormiga,idAlmacen){
-	console.log(hormiga);
+	console.log(idAlmacen);
 	if(idAlmacen === 4){ //servidor
-		var client = new Eureca.Client({ uri: 'http://localhost:8200/' });
-		client.ready(function (serverProxy) {
 			serverProxy.hormigaLlegaFull(hormiga);
-	    });
 	}else if(idAlmacen === 1){// almacen 1
-		var client1 = new Eureca.Client({ uri: 'http://localhost:8010/' });
-		client1.ready(function (serverProxy) {
-			serverProxy.hormigaLlega(hormiga,1);
-	    });
+			serverProxy1.hormigaLlega(hormiga,1);
 	}else if(idAlmacen === 2){	// almacen 2
-		var client2 = new Eureca.Client({ uri: 'http://localhost:8020/' });
-		client2.ready(function (serverProxy) {
-			serverProxy.hormigaLlega(hormiga,2);
-	    });
+			serverProxy2.hormigaLlega(hormiga,2);
 	}else if(idAlmacen === 3){	// almacen 3
-		var client3 = new Eureca.Client({ uri: 'http://localhost:8030/' });
-		client3.ready(function (serverProxy) {
-			serverProxy.hormigaLlega(hormiga,3);
-	    });
+			console.log("entro3");
+			serverProxy3.hormigaLlega(hormiga,3);
 	}
 }
 
