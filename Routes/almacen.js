@@ -12,7 +12,9 @@ var express = require('express'),
 
 var eurecaServer = new Eureca.Server();
 
-
+process.argv.forEach(function (val, index, array) {
+  console.log(index + ': ' + val);
+});
 /*
 	Inicializando
 */
@@ -22,7 +24,9 @@ var comidas = [new objetos.comida("Manzana",0), new objetos.comida("Pera",0), ne
 var depositos = [new objetos.deposito(comidas[0],500,150,100), new objetos.deposito(comidas[1],500,150,100), new objetos.deposito(comidas[2],500,150,100)
 , new objetos.deposito(comidas[3],500,150,100), new objetos.deposito(comidas[4],500,150,100)] 
 
-var almacenActual = almacenes[0]; //AQUI
+
+var almacenActual = almacenes[process.argv[2]]; //AQUI
+
 almacenActual.depositos = depositos;
 var banderea = 0;
 var hor = new Array();
