@@ -8,11 +8,12 @@ function agregarfila(){
         var cell1 = row.insertCell(1);//fruta
         var cell2 = row.insertCell(2);//kg
         var cell3 = row.insertCell(3);//status
-        
+        var cell4 = row.insertCell(4); //KG entregados
         cell.innerHTML = table.rows.length-1;
         cell1.innerHTML = radiobutton();
         cell2.innerHTML = document.getElementById("cantidadkg").value;
         cell3.innerHTML = "Procesando";
+        cell4.innerHTML = "0";
     }
     
 }    
@@ -31,14 +32,32 @@ function radiobutton(){
 }
 
 
-function actualizar_tablapedidos(peticion){
-    var actualizado;
-    
-    var tabla = document.getElementById("tablapedidos");  
 
+/****************************************************************/
+/****************************************************************/
+
+function actualizar_tablapedidos(peticion){//,peticion
+var x= parseInt(peticion.id); 
+var valor= parseInt(peticion.pendienteEnviado)-parseInt(peticion.pendiente);
+
+  var table = document.getElementById("tablapedidos");
+  var rowCount = table.rows.length;
+  console.log("tengo: "+ rowCount+ " filas"); 
+
+   for(var i=1; i<=rowCount; i++) {//|| i===rowCount
+        if(i===x) {
+            var row = table.rows[i]; 
+            row.cells[3].innerHTML = "Listo"; /**/
+            row.cells[4].innerHTML = valor;
+        } 
+  }  
 }
 
-var almacenes_tabla = new Array();
+
+/****************************************************************/
+/****************************************************************/
+
+
 
 /****************************************************************/
 //********************IDIOTA DE MIERDA***************************
@@ -51,6 +70,8 @@ var almacenes_tabla = new Array();
 //********************* 8-)  **************************************** 
 /**********************************************************************/
 
+
+var almacenes_tabla = new Array();
 
 function actualizar_tablalmacenes(almacenes){
     
@@ -152,6 +173,6 @@ var tchat = client.exports.tchat = {};
    {  //respuesta
       //almacenes:  arreglo de almacenes
       //peticion: funcion completa de la peticion respondida
-        actualizar_tablapedidos(peticion);
+        actualizar_tablapedidos(peticion);console.log("soy la peticion que esta lista:", peticion.id);
         actualizar_tablalmacenes(almacenes);
    }

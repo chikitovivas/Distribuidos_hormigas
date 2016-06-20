@@ -56,8 +56,8 @@ function peticiones(id,cantidadHormigas,comida,pendiente){
 	this.id = id;
 	this.cantidadHormigas = cantidadHormigas;
 	this.comida = comida;
-	this.pendiente = pendiente;
-	this.pendienteEnviado = 0;
+	this.pendiente = pendiente; //lo que falta por enviar
+	this.pendienteEnviado = 0; //KG que se han enviado
 }
 
 var almaceness = [new almacenes(1,8010),new almacenes(2,8020),new almacenes(3,8030)];
