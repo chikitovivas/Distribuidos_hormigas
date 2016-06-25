@@ -13,12 +13,15 @@ hormiga.prototype.agarrarComida = function (almacen) {
 				this.comida.peso = this.pendiente;
 				almacen.depositos[i].cantidadActual -= this.pendiente;
 				this.pendiente = 0;
-				this.inventario[almacen.id-1] = almacen;
+				this.inventario[almacen.id] = almacen;
+				this.itinerario.next = 3;
 			}else{
 				this.comida.peso = almacen.depositos[i].cantidadActual;
 				almacen.depositos[i].cantidadActual = 0
 				this.pendiente -= almacen.depositos[i].cantidadActual;
-				this.inventario[almacen.id-1] = almacen;
+				this.inventario[almacen.id] = almacen;
+				var that = this;
+				this.itinerario.next = this.itinerario.recorrido[this.itinerario.recorrido.findIndex(function(id){return id == that.itinerario.next})+1];
 			}
 		}
 	}
@@ -38,12 +41,9 @@ function deposito(comida, capacidadMax, capacidadMin, cantidadAct){
 	this.cantidadActual = cantidadAct;
 }
 
-function itinerario(port,ip,ruta,id){
-	this.port = port;
-	this.ip = ip;
-	this.ruta = ruta;
-	this.enviar = 'http://'+this.ip+':'+this.port+this.ruta;
-	this.id = id;
+function itinerario(recorrido){
+	this.recorrido = recorrido;
+	this.next = recorrido[0];
 }
 
 function almacenes(id,puerto){
@@ -60,7 +60,7 @@ function peticiones(id,cantidadHormigas,comida,pendiente){
 	this.pendienteEnviado = 0; //KG que se han enviado
 }
 
-var almaceness = [new almacenes(1,8010),new almacenes(2,8020),new almacenes(3,8030)];
+var almaceness = [new almacenes(0,8300),new almacenes(1,8310),new almacenes(2,8320)];
 
 module.exports.almacenes = almaceness;
 module.exports.hormiga = hormiga;
