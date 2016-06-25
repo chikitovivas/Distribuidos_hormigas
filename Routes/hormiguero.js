@@ -13,29 +13,44 @@ var express = require('express'),
 
 var cantidadHormigas = 0,
 	cantidadHormigasActivas = 0;
+var almacenes = objetos.almacenes;
 
 var html = fs.readFileSync("../public/index.html");
 /*
 		Inicializacion de los depositos
 */
-var almacenes = funciones.inicializarAlmacenes();
+var hormiguero = new Eureca.Client({ uri: 'http://localhost:8200/' });
+var serverProxy;
+hormiguero.ready(function (serverProx) {
+	serverProxy = serverProx;
+});
+var client = new Eureca.Client({ uri: 'http://localhost:'+almacenes[0].puerto+'/' });
+var almacenProxy0;
+client.ready(function (serverProx) {
+	almacenProxy0 = serverProx;
+});
+var client1 = new Eureca.Client({ uri: 'http://localhost:'+almacenes[1].puerto+'/' });
+var almacenProxy1;
+client1.ready(function (serverProx) {
+	almacenProxy1 = serverProx;
+});
+var client2 = new Eureca.Client({ uri: 'http://localhost:'+almacenes[2].puerto+'/' });
+var almacenProxy2;
+client2.ready(function (serverProx) {
+	almacenProxy2 = serverProx;
+	
+});
+
+inicializarAlmacenes();
 
 
-var itinerarios = [new objetos.itinerario(almacenes[0].puerto,'localhost','/',almacenes[0].id),
-			 new objetos.itinerario(almacenes[1].puerto,'localhost','/',almacenes[1].id), 
-			 new objetos.itinerario(almacenes[2].puerto,'localhost','/',almacenes[2].id)];
-
-//app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
-app.use(express.static('C:/Users/Administrador/Documents/NetBeansProjects/Distribuidos_hormigas/public'));
+app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
+//app.use(express.static('C:/Users/Administrador/Documents/NetBeansProjects/Distribuidos_hormigas/public'));
 
 var peticionesReina = new Array();
 var cantidadPeticiones = 0;
 
-var client = new Eureca.Client({ uri: 'http://localhost:8010/' });
-var serverProxy;
-client.ready(function (serverProx) {
-	serverProxy = serverProx;
-});
+
 /*
 	Rutas
 */
@@ -63,7 +78,7 @@ app.listen(8100,function(){
 		console.log(peticionesReina[peticionActual]);
 
 			while(flag){
-				console.log("i: "+i);
+				//console.log("i: "+i);
 				var pedir0 = Math.floor(Math.random() * (1 - 1) + 1);
 				var pedir1 = Math.floor(Math.random() * (cantidadHormigasActivas - 1) + 1);
 				if(cantidadHormigasActivas === 0)
@@ -78,9 +93,9 @@ app.listen(8100,function(){
 
 				cantidadHormigasActivas++;
 				peticionesReina[peticionActual].cantidadHormigas++;
-					
-				serverProxy.hormigaLlega(new objetos.hormiga(comida, pendiente, itinerarios, pendiente, [null,null,null],peticionActual),1);
-			
+				var hormiga = new objetos.hormiga(comida, pendiente, funciones.crearItinerario(almacenes,pendiente,opciones.comida), pendiente, [null,null,null],peticionActual);	
+				enviarHormiga(hormiga);
+				console.log(hormiga.itinerario);
 				peticionesReina[peticionActual].pendienteEnviado += pendiente;
 
 				if(peticionesReina[peticionActual].pendienteEnviado >= cantidad){
@@ -120,6 +135,7 @@ var sumar = 0;
 //functions under "exports" namespace will be exposed to client side
 eurecaServer.exports.hormigaLlegaFull = function (hormiga) {
 	//var client = new Eureca.Client({ uri: 'http://localhost:8201/' });
+	actualizarAlmacenes(hormiga);
 	peticionesReina[hormiga.idPeticion].pendiente -= hormiga.comida.peso;
 	peticionesReina[hormiga.idPeticion].cantidadHormigas--;
 	cantidadHormigasActivas--;
@@ -153,3 +169,49 @@ tchatServer.browser = function () {
 server.listen(8200);
 
  
+
+ /*
+	Funciones no Migrables
+ */
+
+ function inicializarAlmacenes(){
+
+	client.ready(function (serverProx) {
+		serverProx.getDepositos().onReady(function(result){
+    		almacenes[0].depositos = result;
+    	});
+	});
+	client1.ready(function (serverProx) {
+		serverProx.getDepositos().onReady(function(result){
+    		almacenes[1].depositos = result;
+    	});
+	});
+	client2.ready(function (serverProx) {
+		serverProx.getDepositos().onReady(function(result){
+    		almacenes[2].depositos = result;
+    	});
+	});		
+
+}
+
+function enviarHormiga(hormiga){
+
+	if(hormiga.itinerario.next === 3){ //servidor
+			serverProxy.hormigaLlegaFull(hormiga);
+	}else if(hormiga.itinerario.next === 0){// almacen 0
+			almacenProxy0.hormigaLlega(hormiga);
+	}else if(hormiga.itinerario.next === 1){	// almacen 1
+			almacenProxy1.hormigaLlega(hormiga);
+	}else if(hormiga.itinerario.next === 2){	// almacen 2
+			almacenProxy2.hormigaLlega(hormiga);
+	}
+}
+
+function actualizarAlmacenes(hormiga){
+	if(hormiga.inventario[0] !== null)
+		almacenes[0] = hormiga.inventario[0];
+	if(hormiga.inventario[1] !== null)
+		almacenes[1] = hormiga.inventario[1];
+	if(hormiga.inventario[2] !== null)
+		almacenes[2] = hormiga.inventario[2];				 
+}
