@@ -84,7 +84,8 @@ function actualizar_tablalmacenes(almacenes){
  
 
     //console.log(" Hola soy almacenes_tabla[] antes de la arrechera: ", almacenes_tabla);
-    almacenes_tabla[0]= almacenes[0];
+    if (almacenes[0] !== null) 
+        almacenes_tabla[0]= almacenes[0];
     if (almacenes[1] !== null) 
         almacenes_tabla[1]= almacenes[1];
     if (almacenes[2] !== null)
