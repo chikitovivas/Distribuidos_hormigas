@@ -44,8 +44,8 @@ client2.ready(function (serverProx) {
 inicializarAlmacenes();
 
 
-app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
-//app.use(express.static('C:/Users/Administrador/Documents/NetBeansProjects/Distribuidos_hormigas/public'));
+//app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
+app.use(express.static('C:/Users/Administrador/Documents/NetBeansProjects/Distribuidos_hormigas/public'));
 
 var peticionesReina = new Array();
 var cantidadPeticiones = 0;
