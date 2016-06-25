@@ -8,7 +8,7 @@ var hormiga = function(comid, pesoMaxim, itinerario,pendient,inventario,id) {
 }
 hormiga.prototype.agarrarComida = function (almacen) {
 	var flag = 0; var cantidad_comidapedida=0;
-	
+
 	for (var i = almacen.depositos.length - 1; i >= 0; i--) {
 		if(almacen.depositos[i].comida.tipo === this.comida.tipo){
 			if(almacen.depositos[i].cantidadActual >= this.pendiente){
@@ -42,6 +42,10 @@ hormiga.prototype.agarrarComida = function (almacen) {
 		};
 };
 
+hormiga.prototype.agarrarcomidagenerador = function (){
+
+
+}
 
 function comida(tipo,peso){
 	this.tipo = tipo;
@@ -74,6 +78,16 @@ function peticiones(id,cantidadHormigas,comida,pendiente){
 	this.pendiente = pendiente; //lo que falta por enviar
 	this.pendienteEnviado = 0; //KG que se han enviado
 }
+
+
+function generadordecomida(){
+   this.manzana = generadordecomida("manzana");
+   this.pera;
+   this.naranja;
+   this.patilla;
+   this.banana;
+}
+
 
 var almaceness = [new almacenes(0,8300),new almacenes(1,8310),new almacenes(2,8320)];
 
