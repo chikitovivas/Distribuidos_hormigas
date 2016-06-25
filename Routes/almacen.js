@@ -59,9 +59,13 @@ eurecaServer.exports.hormigaLlega = function(hormiga){
 	var hor = new objetos.hormiga(hormiga.comida,hormiga.pesoMaximo,hormiga.itinerario,hormiga.pendiente,hormiga.inventario,hormiga.idPeticion);
 
 	//console.log(hor);
-	almacenActual = hor.agarrarComida(almacenActual);
+	var respuesta = hor.agarrarComida(almacenActual);
+	almacenActual = respuesta.almacen;
 	console.log(almacenActual);
 	enviarHormiga(hor);
+	if(respuesta.flag === 1){
+		//mandar a buscar comida a los generadores
+	}
 
 }
 
