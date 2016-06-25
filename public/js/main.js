@@ -89,7 +89,24 @@ function actualizar_tablalmacenes(almacenes){
         almacenes_tabla[1]= almacenes[1];
     if (almacenes[2] !== null)
         almacenes_tabla[2]= almacenes[2];
- 
+
+/*
+  var table = document.getElementById("tablalmacenes");
+  var rowCount = table.rows.length;
+   //row = table.rows;
+
+  for(var j=0; j<5; j++){
+      for(var i=1; i<rowCount; i++) {//|| i===rowCount
+            var row = table.rows[i]; 
+            
+            row.cells[1].innerHTML = almacenes_tabla[0].depositos[j].cantidadActual; 
+            row.cells[2].innerHTML = almacenes_tabla[1].depositos[j].cantidadActual; 
+            row.cells[3].innerHTML = almacenes_tabla[2].depositos[j].cantidadActual;
+      }  
+      
+  }*/
+  
+
 var nuevoCodigoHtml2 =
    '<div class="col-md-5" id="divtablapedidos"><TABLE border="1" id="tablalmacenes">'+
    '<TR><TD width=100 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"> <h4> - </h4>'+
