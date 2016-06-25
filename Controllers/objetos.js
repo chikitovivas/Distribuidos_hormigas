@@ -7,7 +7,8 @@ var hormiga = function(comid, pesoMaxim, itinerario,pendient,inventario,id) {
 	this.idPeticion = id;
 }
 hormiga.prototype.agarrarComida = function (almacen) {
-	var flag = 0;
+	var flag = 0; var cantidad_comidapedida=0;
+	
 	for (var i = almacen.depositos.length - 1; i >= 0; i--) {
 		if(almacen.depositos[i].comida.tipo === this.comida.tipo){
 			if(almacen.depositos[i].cantidadActual >= this.pendiente){
@@ -27,11 +28,17 @@ hormiga.prototype.agarrarComida = function (almacen) {
 			//Ya estoy en tipo de comida, evaluo
 			//TU if
 			//si cumple if, flag = 1;
+			if ((almacen.depositos[i].cantidadActual <= almacen.depositos[i].capacidadMinima)  && (almacen.depositos[i].esperando===0)){
+				flag=1;
+				almacen.depositos[i].esperando=1;
+				cantidad_comidapedida = almacen.depositos[i].capacidadMaxima-almacen.depositos[i].capacidadActual;
+			}
 		}
 	}
 	return {
 			almacen:almacen,
-			flag:flag
+			flag:flag, //para realizar la peticion de comida al generador
+			cantidad_comidapedida
 		};
 };
 
@@ -46,6 +53,7 @@ function deposito(comida, capacidadMax, capacidadMin, cantidadAct){
 	this.capacidadMaxima = capacidadMax;
 	this.capacidadMinima = capacidadMin;
 	this.cantidadActual = cantidadAct;
+	this.esperando=0;
 }
 
 function itinerario(recorrido){
