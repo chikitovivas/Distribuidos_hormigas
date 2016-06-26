@@ -47,7 +47,10 @@ var clientProxy2;
 client2.ready(function (serverProx) {
 	clientProxy2 = serverProx;
 });
-/*Servidor*/
+
+/***********/
+/*SERVIDOR*/
+/***********/
 
 eurecaServer.attach(server);
 		
@@ -63,11 +66,30 @@ eurecaServer.exports.hormigaLlega = function(hormiga){
 	almacenActual = respuesta.almacen;
 	console.log(almacenActual);
 	enviarHormiga(hor);
-	if(respuesta.flag === 1){
+	/*console.log("*********************************");console.log("Llegue de agarrar comida");
+	console.log("almacen",respuesta.almacen);console.log("flag:",respuesta.flag);
+	console.log("Almacen que pide: ",respuesta.almacen_peticion);console.log("cantidad que pide: ",respuesta.cantidad_peticion);console.log("tipo comida:", respuesta.tipocomida_peticion);
+	*/if(respuesta.flag === 1){
 		//mandar a buscar comida a los generadores
+	//	console.log("*********************************");console.log("Entre al if del flag===1");
+		serverProxy.hormigaGeneradores(respuesta.almacen_peticion,respuesta.cantidad_peticion,respuesta.tipocomida_peticion);
 	}
 
 }
+
+eurecaServer.exports.hormigaSuma = function(hormiga){
+	
+	console.log("Llega hormiga");
+	
+	var hor = new objetos.hormiga(hormiga.comida,hormiga.pesoMaximo,hormiga.itinerario,hormiga.pendiente,hormiga.inventario,hormiga.idPeticion);
+
+	
+	almacenActual = hor.dejaComida(almacenActual);console.log(almacenActual);
+	//console.log("hormigaSuma, almacenActual", almacenActual); 
+	enviarHormiga(hor);
+
+}
+
 
 eurecaServer.exports.getDepositos = function(){
 	console.log("llega depositos");
@@ -80,7 +102,6 @@ server.listen(almacenActual.puerto);
 /*
 	Funciones no Migrables
 */
-
 function enviarHormiga(hormiga){
 
 	if(hormiga.itinerario.next === 3){ //servidor
