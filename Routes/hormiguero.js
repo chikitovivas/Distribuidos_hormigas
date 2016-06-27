@@ -74,9 +74,9 @@ client7.ready(function (serverProx) {
 
 inicializarAlmacenes();
 
-//app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
+app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
 
-app.use(express.static('C:/Users/Administrador/Documents/NetBeansProjects/Distribuidos_hormigas/public'));
+//app.use(express.static('C:/Users/Administrador/Documents/NetBeansProjects/Distribuidos_hormigas/public'));
 
 var peticionesReina = new Array();
 var cantidadPeticiones = 0;
@@ -90,60 +90,57 @@ app.listen(8100,function(){
 
 	app.get('/',function(req,res){
 		res.send(html.toString());
-		//res.end();
 	});
 		
 	app.get('/creador/comida_reina', function(req,res){
 		var opciones = req.query;
-		var comida = new objetos.comida(opciones.comida+"",0), 
-			cantidad = opciones.cantidad, flag = 1;
+		var comidas = opciones.comidas, flag = 1;
 
 		var peticionActual = cantidadPeticiones;	
-		var i=0;
-		var pendiente = 0; //Inicializacion del peso maximo de la hormiga y lo que va a pedir
-		var faltante = cantidad; //disminuye cada vez que se manda una hormiga
 
-		peticionesReina[peticionActual] = new objetos.peticiones(opciones.id, 1, comida, cantidad);	
+		peticionesReina[peticionActual] = new objetos.peticiones(opciones.id, 1, comidas);	
 		cantidadPeticiones++;
 		
-		console.log(peticionesReina[peticionActual]);
+		console.log(peticionesReina[peticionActual]);			
 
-		while(flag){
-			var pedir0 = Math.floor(Math.random() * (1 - 1) + 1);
-			var pedir1 = Math.floor(Math.random() * (cantidadHormigasActivas - 1) + 1);
-			if(cantidadHormigasActivas === 0)
-				pendiente = pedir0;
-			else
-				pendiente = pedir1;
+		for (var i = comidas.length - 1; i >= 0; i--) {
+			var flag = 1;
+			var pesoHormiga = 0;
+			var faltante = comidas[i].cantidad;
+			while(flag){
+				var pedir0 = Math.floor(Math.random() * (1 - 1) + 1);
+				var pedir1 = Math.floor(Math.random() * (cantidadHormigasActivas - 1) + 1);
+				if(cantidadHormigasActivas === 0)
+					pesoHormiga = pedir0;
+				else
+					pesoHormiga = pedir1;
 
-			if(faltante < pendiente)
-				pendiente = faltante;
-			else
-				faltante -= pendiente;
+				if(faltante < pesoHormiga){
+					pesoHormiga = faltante;
+					faltante = 0;
+				}
+				else
+					faltante -= pesoHormiga;
 
-			cantidadHormigasActivas++; //aumenta la cantidad e hormigas activas
-			peticionesReina[peticionActual].cantidadHormigas++; //auumenta cantidad de hormigas que se enviaron en la peticion
-			
-			/* hormiga
+				cantidadHormigasActivas++;//aumenta la cantidad de hormigas activas
+				peticionesReina[peticionActual].cantidadHormigas++;//auumenta cantidad de hormigas que se enviaron en la peticion
+				peticionesReina[peticionActual].cantidadHormigasEnviadas++;
+				/* hormiga
 			   comida: tipo y peso
 			   pediente: peso maximo 
 			   objeto ininerario
 			   pendiente: es lo que va a pedir
 			   null 1,2,3: inventarios de los almacenes
 			   opciones.id: id de la peticion
-			*/
-			var hormiga = new objetos.hormiga(comida, pendiente, funciones.crearItinerario2(almacenes,pendiente,opciones.comida,0,0), pendiente, [null,null,null],opciones.id);	
-			//var hormiga = new objetos.hormiga(comida, pendiente, funciones.crearItinerario(almacenes,pendiente,opciones.comida), pendiente, [null,null,null],opciones.id);	
-			enviarHormiga(hormiga); //envia la hormiga al respectivo almacen
-			console.log(hormiga.itinerario); //se imprime el itinerario de la homiga
-			peticionesReina[peticionActual].pendienteEnviado += pendiente; //aumenta el pendiente enviado de la peticion, aumenta lo que ya se ha enviado
-
-			if(peticionesReina[peticionActual].pendienteEnviado >= cantidad){
-				flag = 0;
-			}	
-			i++;	
+				*/
+				var hormiga = new objetos.hormiga(new objetos.comida(comidas[i].tipo+"",0), pesoHormiga, funciones.crearItinerario2(almacenes,pesoHormiga,comidas[i].tipo,0,0), pesoHormiga, [null,null,null],opciones.id);	
+				enviarHormiga(hormiga);//envia la hormiga al respectivo almacen
+				console.log(hormiga.itinerario);//se imprime el itinerario de la homiga
+				if(faltante === 0){
+					flag = 0;
+				}
+			}
 		}
-		
 		res.jsonp(1);
 		res.end();
 	});
@@ -171,6 +168,8 @@ eurecaServer.onConnect(function (connection) {
 eurecaServer.onDisconnect(function (connection) {    
     //console.log('Client quit', connection.id);
  delete connections[connection.id];
+ 	peticionesReina = new Array();
+	cantidadPeticiones = 0;
 });
 
 var sumar = 0;
@@ -271,42 +270,60 @@ function buscarPeticion(hormiga,callback){
 		}
 	}
 }
+function restaurarAlmacen(almacen,deposito){
+	if(almacen === 0){// almacen 0
+			almacenProxy0.restaurarDeposito(deposito);
+	}else if(almacen === 1){	// almacen 1
+			almacenProxy1.restaurarDeposito(deposito);
+	}else if(almacen === 2){	// almacen 2
+			almacenProxy2.restaurarDeposito(deposito);
+	}
+}
 
 
-function eventoLlegaHormiga(peticion,hormiga){
-	peticionesReina[peticion].pendiente -= hormiga.comida.peso;
-	peticionesReina[peticion].cantidadHormigas--;
-	cantidadHormigasActivas--;
-	sumar += hormiga.comida.peso;
-	console.log(peticionesReina[peticion].cantidadHormigas + "i");
-	console.log(hormiga);
-	if(peticionesReina[peticion].pendiente <= 0){
-		console.log("Ya hormiga reina obtuvo: "+ peticionesReina[peticion].id);
-		connections[browser].client.tchat.peticionlista(hormiga.inventario, peticionesReina[peticion]);
-		console.log(JSON.stringify(hormiga.inventario));
+function eventoLlegaHormiga(i,hormiga){
+	for (var j = peticionesReina[i].comidas.length - 1; j >= 0; j--) {
+		if(peticionesReina[i].comidas[j].tipo === hormiga.comida.tipo)
+			peticionesReina[i].comidas[j].pendiente -= hormiga.comida.peso;	
 	}	
-
-	if(peticionesReina[peticion].cantidadHormigas === 1){
-		console.log("Ya llegaron todas las hormigas");
-		connections[browser].client.tchat.peticionlista(hormiga.inventario, peticionesReina[peticion]);
-		console.log(JSON.stringify(hormiga.inventario));
-	}}
+	peticionesReina[i].cantidadHormigas--;
+	cantidadHormigasActivas--;
+	peticionesReina[i].cantidadComidaLlegando += hormiga.comida.peso;
+	console.log(peticionesReina[i].cantidadHormigas + "i");
+	console.log(hormiga);
+	console.log(sumar);
+	if(peticionesReina[i].cantidadHormigas === 1  ){
+		console.log("Ya llegaron todas las hormigas con carga");
+		cantidadHormigasActivas++;
+		var hormigaEspecial = new objetos.hormiga(new objetos.comida(hormiga.comida.tipo+"",0), 0, new objetos.itinerario([0,1,2,3]) , 0, [null,null,null],hormiga.idPeticion);	
+		enviarHormiga(hormigaEspecial);
+		if(hormiga.idPeticion >= 10000){
+			console.log(hormiga.idPeticion);
+			console.log(hormiga.itinerario.recorrido[1]);
+			restaurarAlmacen(hormiga.itinerario.recorrido[1],hormiga.comida.tipo);
+		}
+	}
+	if(peticionesReina[i].cantidadHormigas === 0){
+		console.log("Ya llego hormiga especial");
+		connections[browser].client.tchat.peticionlista(hormiga.inventario, peticionesReina[i]);
+		console.log(JSON.stringify(peticionesReina[i]));
+	}
+}
 
 
 var num_peticiones =10000;
 function generarPeticion(almacen_peticion,cantidad_peticion,tipocomida_peticion){
-		var comida = new objetos.comida(tipocomida_peticion+"",0), flag = 1,
-			cantidad = cantidad_peticion;
+		var objetoComida = {tipo:tipocomida_peticion,cantidad:cantidad_peticion,pendiente:cantidad_peticion};
+		var flag = 1;
 
 		var peticionActual = cantidadPeticiones;	
-		var i=0;
 		var pendiente = 0; //Inicializacion del peso maximo de la hormiga y lo que va a pedir
-		var faltante = cantidad; //disminuye cada vez que se manda una hormiga
-		
+		var faltante = cantidad_peticion; //disminuye cada vez que se manda una hormiga
+		var suma = 0
 
-		peticionesReina[peticionActual] = new objetos.peticiones(num_peticiones, 1, comida, cantidad);	
+		peticionesReina[peticionActual] = new objetos.peticiones(num_peticiones, 1, objetoComida);	
 		cantidadPeticiones++;
-		
+		console.log(cantidad_peticion);
 		console.log(peticionesReina[peticionActual]);
 
 		while(flag){
@@ -317,14 +334,15 @@ function generarPeticion(almacen_peticion,cantidad_peticion,tipocomida_peticion)
 			else
 				pendiente = pedir1;
 
-			if(faltante < pendiente)
+			if(faltante < pendiente){
 				pendiente = faltante;
-			else
+				faltante = 0;
+			}else
 				faltante -= pendiente;
 
 			cantidadHormigasActivas++; //aumenta la cantidad e hormigas activas
 			peticionesReina[peticionActual].cantidadHormigas++; //auumenta cantidad de hormigas que se enviaron en la peticion
-			
+			peticionesReina[peticionActual].cantidadHormigasEnviadas++;
 			/* hormiga
 			   comida: tipo y peso
 			   pediente: peso maximo 
@@ -333,23 +351,16 @@ function generarPeticion(almacen_peticion,cantidad_peticion,tipocomida_peticion)
 			   null 1,2,3: inventarios de los almacenes
 			   opciones.id: id de la peticion
 			*/
-			var hormiga = new objetos.hormiga(comida, pendiente, funciones.crearItinerario2(generadoresdecomida,pendiente,comida.tipo,1,almacen_peticion), pendiente, [null,null,null],peticionesReina[peticionActual].id);	
+			var hormiga = new objetos.hormiga(new objetos.comida(tipocomida_peticion+"",0), pendiente, funciones.crearItinerario2(generadoresdecomida,pendiente,tipocomida_peticion,1,almacen_peticion), pendiente, [null,null,null],peticionesReina[peticionActual].id);	
 			//var hormiga = new objetos.hormiga(comida, pendiente, funciones.crearItinerario(almacenes,pendiente,opciones.comida), pendiente, [null,null,null],opciones.id);	
 			enviarHormiga(hormiga); //envia la hormiga a la respectiva ruta
 			console.log(hormiga.itinerario); //se imprime el itinerario de la homiga
-			peticionesReina[peticionActual].pendienteEnviado += pendiente; //aumenta el pendiente enviado de la peticion, aumenta lo que ya se ha enviado
-
-			if(peticionesReina[peticionActual].pendienteEnviado >= cantidad){
+			suma += pendiente;
+			console.log(faltante);
+			console.log(suma);
+			if(faltante === 0)
 				flag = 0;
-				/*for (var i = 0; i < almacenes.deposito.length; i++) {
-					if(almacenes[almacen_peticion].deposito[i].comida.tipo===comida.tipo)
-						almacenes[almacen_peticion].deposito[i].esperando=0;
-
-				}*/
-				
-			}	
-			i++;	
-
+			
 		}
 	num_peticiones++;
 }

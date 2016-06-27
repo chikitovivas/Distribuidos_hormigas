@@ -3,6 +3,14 @@
 function agregarfila(){
     var table = document.getElementById("tablapedidos");
     {
+        comidas = radiobutton();
+        escrito = Array();
+        escritoVal = Array();
+        for (var i = comidas.length - 1, j=0; i >= 0; i--,j++) {
+          escrito[j] = comidas[i].tipo;
+          escritoVal[j] = comidas[i].cantidad;
+        }
+
         var row = table.insertRow(table.rows.length);
         var cell = row.insertCell(0); //n
         var cell1 = row.insertCell(1);//fruta
@@ -10,8 +18,8 @@ function agregarfila(){
         var cell3 = row.insertCell(3);//status
         var cell4 = row.insertCell(4); //KG entregados
         cell.innerHTML = table.rows.length-1;
-        cell1.innerHTML = radiobutton();
-        cell2.innerHTML = document.getElementById("cantidadkg").value;
+        cell1.innerHTML = escrito;
+        cell2.innerHTML = escritoVal;
         cell3.innerHTML = "Procesando";
         cell4.innerHTML = "0";
     }
@@ -21,14 +29,23 @@ function agregarfila(){
 function radiobutton(){
         var resultado="null";
         var porNombre=document.getElementsByName("fruta");
+        //var cantidadporNombre = document.getElementsByName("cantidades");
         var i;
+        var comidas = Array(); 
+        var cont = 0;
         
         for(i=0;i<porNombre.length; i++){
-                if(porNombre[i].checked) {
-                    resultado=porNombre[i].value;
-                }
+            if(porNombre[i].checked) {
+                //if(cantidadporNombre[i].value === null){}
+                  //return false;
+                //}else{
+                  //comidas[cont] = {tipo:porNombre[i].value,cantidad:cantidadporNombre[i].value}
+                  comidas[cont] = {tipo:porNombre[i].value,cantidad:document.getElementById("cantidadkg").value,pendiente:document.getElementById("cantidadkg").value}
+                  cont++;
+                //}
+            }
         }
-        return resultado;
+        return comidas;
 }
 
 
@@ -37,8 +54,11 @@ function radiobutton(){
 /****************************************************************/
 
 function actualizar_tablapedidos(peticion){//,peticion
-var x= parseInt(peticion.id); 
-var valor= parseInt(peticion.pendienteEnviado)-parseInt(peticion.pendiente);
+  var x= parseInt(peticion.id); 
+  var valor = Array();
+  for (var i = peticion.comidas.length - 1,j=0; i >= 0; i--,j++) {
+    valor[j] = parseInt(peticion.comidas[i].cantidad) - parseInt(peticion.comidas[i].pendiente);
+  }
 
   var table = document.getElementById("tablapedidos");
   var rowCount = table.rows.length;
@@ -144,24 +164,31 @@ var nuevoCodigoHtml2 =
 
 
 $(document).ready(function () {
-    $('#solicitar').click( function () {
-        $.ajax({
-            method : "GET",
-            url: "/creador/comida_reina",
-            //dataType: "json",
-            data : {comida : radiobutton(), cantidad:document.getElementById("cantidadkg").value, id:document.getElementById("tablapedidos").rows.length},
-            
-            success : function(respuesta){
-              if (respuesta===1)
-                agregarfila();
-           /* actualizar_tablalmacenes(json);*/
-                        
-            },error:function(){ 
-                //alert("error!!!!");
-            },
-                async:   true
-            });
-  } );
+      $('#solicitar').click( function () {
+            //if(radiobutton() === false){
+            //alert("Introduzca cantidad de comida");
+          //}else{
+          var comidas = radiobutton();
+          console.log(JSON.stringify(comidas));
+          $.ajax({
+              method : "GET",
+              url: "/creador/comida_reina",
+              //dataType: "json",
+              data : {comidas : comidas, id:document.getElementById("tablapedidos").rows.length},
+              
+              success : function(respuesta){
+                if (respuesta===1)
+                  agregarfila();
+             /* actualizar_tablalmacenes(json);*/
+                          
+              },error:function(){ 
+                  //alert("error!!!!");
+              },
+                  async:   true
+              });
+      });
+    //} 
+
 });
 
 

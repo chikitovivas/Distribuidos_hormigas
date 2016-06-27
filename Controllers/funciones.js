@@ -13,38 +13,36 @@ function actualizarAlmacenes(hormiga,almacenes){
 
 	return almacenes;
 }
-
-function crearItinerario(almacenes,pendiente,tipo){
-	var arreglo = Array();
-	var cont = 0;
-	for (var i = 0; i < almacenes.length ; i++) {
-		for (var j = 0; j < almacenes[i].depositos.length ; j++) {
-			if(almacenes[i].depositos[j].comida.tipo === tipo && almacenes[i].depositos[j].cantidadActual >= pendiente){
-				arreglo[cont] = almacenes[i].id;
-				cont++;
-				j = 5;
-			}
-		}
-	}
-	arreglo[cont] = 3;
-	return new objetos.itinerario(arreglo);
-}
                           //provision: almacen o generadores
 function crearItinerario2(provision,pendiente,tipo, flag,quienpide){
 	var arreglo = Array();
 	var cont = 0;
+	var asc = Array();
+	var ascID = Array(); 
 
 	if (flag===0){
 		for (var i = 0; i < provision.length ; i++) {
 			for (var j = 0; j < provision[i].depositos.length ; j++) {
-				if(provision[i].depositos[j].comida.tipo === tipo && provision[i].depositos[j].cantidadActual >= pendiente){
-					arreglo[cont] = provision[i].id;
+				if(provision[i].depositos[j].comida.tipo === tipo && provision[i].depositos[j].cantidadActual > 0){
+					asc[cont] = provision[i].depositos[j].cantidadActual;
+					ascID[cont] = {id:provision[i].id,indice:cont,cantidadActual:provision[i].depositos[j].cantidadActual};
 					cont++;
-					j = 5;
 				}
 			}
 		}
-		arreglo[cont] = 3;
+		asc.sort(function(a, b){return a>b});
+
+		for (var i = 0; i < asc.length; i++) {
+			for (var j = 0; j < ascID.length; j++) {
+				if(asc[i] === ascID[j].cantidadActual){
+					arreglo.push(ascID[j].id);
+					ascID[j].cantidadActual = -1;
+				}
+			}
+		}
+
+
+		arreglo.push(3);
 		return new objetos.itinerario(arreglo);
 	}else if(flag===1){//console.log("console.log", JSON.stringify(provision)); console.log("Hola, soy el tipo guapo ",tipo);
 		for (var i = 0; i < provision.length ; i++) {
@@ -64,5 +62,4 @@ function crearItinerario2(provision,pendiente,tipo, flag,quienpide){
 
 module.exports.actualizarAlmacenes = actualizarAlmacenes;
 
-module.exports.crearItinerario = crearItinerario;
 module.exports.crearItinerario2 = crearItinerario2;

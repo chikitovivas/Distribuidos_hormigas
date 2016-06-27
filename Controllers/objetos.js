@@ -12,32 +12,23 @@ hormiga.prototype.agarrarComida = function (almacen) {
 	for (var i = almacen.depositos.length - 1; i >= 0; i--) {
 		if(almacen.depositos[i].comida.tipo === this.comida.tipo){
 			if(almacen.depositos[i].cantidadActual >= this.pendiente){
-				this.comida.peso = this.pendiente;
+				this.comida.peso += this.pendiente;
 				almacen.depositos[i].cantidadActual -= this.pendiente;
 				this.pendiente = 0;
 				this.inventario[almacen.id] = almacen;
 				this.itinerario.next = 3;
 			}else{
-				this.comida.peso = almacen.depositos[i].cantidadActual;
-				almacen.depositos[i].cantidadActual = 0;
+				this.comida.peso += almacen.depositos[i].cantidadActual;
 				this.pendiente -= almacen.depositos[i].cantidadActual;
+				almacen.depositos[i].cantidadActual = 0
 				this.inventario[almacen.id] = almacen;
 				var that = this;
 				this.itinerario.next = this.itinerario.recorrido[this.itinerario.recorrido.findIndex(function(id){return id == that.itinerario.next})+1];
 			}
-			//Ya estoy en tipo de comida, evaluo
-			//TU if
-			//si cumple if, flag = 1;
-			//console.log(almacen.depositos[i].cantidadActual);
-			//console.log(almacen.depositos[i].cantidadActual);
-			//console.log("aqui fue");
 			if ((almacen.depositos[i].cantidadActual <= almacen.depositos[i].capacidadMinima)  && (almacen.depositos[i].esperando===0)){
-				
 				almacen_peticion=almacen.id;
 				flag=1;
 				almacen.depositos[i].esperando=1;
-				//console.log("almacen.depositos[i].capacidadMaxima",almacen.depositos[i].capacidadMaxima);
-				//console.log("almacen.depositos[i].cantidadActual",almacen.depositos[i].cantidadActual);
 				cantidad_peticion = almacen.depositos[i].capacidadMaxima-almacen.depositos[i].cantidadActual;
 				tipocomida_peticion=almacen.depositos[i].comida.tipo;
 			}
@@ -55,9 +46,7 @@ hormiga.prototype.agarrarComida = function (almacen) {
 hormiga.prototype.dejaComida = function (almacen){
 	for (var i = almacen.depositos.length - 1; i >= 0; i--) {
 		if(almacen.depositos[i].comida.tipo === this.comida.tipo){
-			//console.log("soy lo que te hace engordar: ",this.comida.peso);
 			almacen.depositos[i].cantidadActual += this.comida.peso; 
-			//console.log("soy yo 2:",almacen.depositos[i].cantidadActual );
 			this.comida.peso=0;
 			this.inventario[almacen.id] = almacen;
 			that=this;
@@ -92,14 +81,20 @@ function almacenes(id,puerto){
 	this.depositos = null;
 }
 
-function peticiones(id,cantidadHormigas,comida,pendiente){
+/*function peticiones(id,cantidadHormigas,comida,pendiente){
 	this.id = id;
 	this.cantidadHormigas = cantidadHormigas;
 	this.comida = comida;
 	this.pendiente = pendiente; //lo que falta por enviar
 	this.pendienteEnviado = 0; //KG que se han enviado
+}*/
+function peticiones(id,cantidadHormigas,comidas){
+	this.id = id;
+	this.cantidadHormigas = cantidadHormigas;
+	this.comidas = comidas;
+	this.cantidadHormigasEnviadas = cantidadHormigas;
+	this.cantidadComidaLlegando = 0;
 }
-
 
 function generadoresdecomida(id,puerto, tipo){
    	this.id = id;
