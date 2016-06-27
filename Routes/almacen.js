@@ -23,6 +23,11 @@ var depositos = [new objetos.deposito(comidas[0],500,150,100), new objetos.depos
 
 var almacenActual = almacenes[process.argv[2]]; //AQUI
 almacenActual.depositos = depositos;
+var tiposComida = Array();
+for (var i = 0; i < depositos.length; i++) {
+	tiposComida.push(depositos[i].comida.tipo);
+}
+
 
 /*
 	RPC
@@ -61,18 +66,22 @@ eurecaServer.exports.hormigaLlega = function(hormiga){
 
 	var hor = new objetos.hormiga(hormiga.comida,hormiga.pesoMaximo,hormiga.itinerario,hormiga.pendiente,hormiga.inventario,hormiga.idPeticion);
 
-	//console.log(hor);
-	var respuesta = hor.agarrarComida(almacenActual);
-	almacenActual = respuesta.almacen;
-	console.log(almacenActual);
-	enviarHormiga(hor);
-	/*console.log("*********************************");console.log("Llegue de agarrar comida");
-	console.log("almacen",respuesta.almacen);console.log("flag:",respuesta.flag);
-	console.log("Almacen que pide: ",respuesta.almacen_peticion);console.log("cantidad que pide: ",respuesta.cantidad_peticion);console.log("tipo comida:", respuesta.tipocomida_peticion);
-	*/if(respuesta.flag === 1){
-		//mandar a buscar comida a los generadores
-	//	console.log("*********************************");console.log("Entre al if del flag===1");
-		serverProxy.hormigaGeneradores(respuesta.almacen_peticion,respuesta.cantidad_peticion,respuesta.tipocomida_peticion);
+		//console.log(hor);
+	if(hor.pendiente === 0){
+		hor.inventario[almacenActual.id] = almacenActual;
+		hor.itinerario.next = hor.itinerario.recorrido[hor.itinerario.recorrido.findIndex(function(id){return id == hor.itinerario.next})+1];
+		enviarHormiga(hor);
+		//console.log(hor);
+	}else{
+		//console.log(hor);
+		var respuesta = hor.agarrarComida(almacenActual);
+		almacenActual = respuesta.almacen;
+		console.log(almacenActual);
+		enviarHormiga(hor);
+		if(respuesta.flag === 1){
+			//mandar a buscar comida a los generadores
+			serverProxy.hormigaGeneradores(respuesta.almacen_peticion,respuesta.cantidad_peticion,respuesta.tipocomida_peticion);
+		}
 	}
 
 }
@@ -96,6 +105,12 @@ eurecaServer.exports.getDepositos = function(){
 	return almacenActual.depositos;
 };	
 
+eurecaServer.exports.restaurarDeposito = function(tipo){
+	/*console.log(tipo);
+	console.log(tiposComida.findIndex(function(id){return id==tipo}));
+	console.log(tiposComida);*/
+	almacenActual.depositos[tiposComida.findIndex(function(id){return id==tipo})].esperando = 0;
+};	
 
 server.listen(almacenActual.puerto);
 
