@@ -44,15 +44,15 @@ function crearItinerario2(provision,pendiente,tipo, flag,quienpide){
 
 		arreglo.push(3);
 		return new objetos.itinerario(arreglo);
-	}else if(flag===1){//console.log("console.log", JSON.stringify(provision)); console.log("Hola, soy el tipo guapo ",tipo);
+	}else if(flag===1){
 		for (var i = 0; i < provision.length ; i++) {
 			if(provision[i].tipocomida === tipo){
 				arreglo[cont] = provision[i].id;
 				cont++;
 				i = 6;
 			}
-		}//console.log("soy Luis Jose el ladilloso que pide:",quienpide);
-		arreglo[cont] = quienpide; //console.log("soy elñ arreglo: ",arreglo[cont]);
+		}
+		arreglo[cont] = quienpide; 
 		cont++;
 		arreglo[cont]=3;
 		return new objetos.itinerario(arreglo);

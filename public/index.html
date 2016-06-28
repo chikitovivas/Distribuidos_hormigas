@@ -40,31 +40,31 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">Hormiguero 2.0</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" role="form">
-            <button type="submit" class="btn btn-success animated flash">Información</button>
+            <button type="submit" class="btn btn-success animated flash">Esto es de mentira :D</button>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
+    <div class="jumbotron" style="background-color:#D9F4DB">
       <div class="container">
           
           <div  ALIGN=CENTER>
-            <h1 class=" animated wobble" ALIGN="center">Hormiguero!</h1>
+            <h1 class=" animated wobble" ALIGN="center">Hormiguero!</h1><br>
           </div>
-          <br><br>   
+           
           <div class="col-md-3" ALIGN=CENTER>
             <br><br><img src="img/hormiga_reina.png">
           </div>
          <!-- <br clear="right">-->
          
-         <div class="col-md-9">  
-             <img src="img/sin_2.png" width='250' height='60'>
+         <div class="col-md-9" style="text-align:center">  
+             <img src="img/sin_2.png" ALIGN="left" width='250' height='60'>
             
             <TABLE class="tablafrutas">
                 <TR> 
@@ -114,13 +114,43 @@
                         <img src="img/5.png" width='150' height='130'>
                     </TD>
                 </TR>     
+                <TR>
+                    <TD width=300 VALIGN=MIDDLE ALIGN=CENTER>
+                        <br>
+                        <input type="number" id="cantidadkg0" name="cantidades" style="width:80px; text-align:center" value="20" min="1" required/>
+                        <label > KG</label>
+                    </TD>
+                    <TD WIDTH=100 VALIGN=MIDDLE ALIGN=CENTER >
+                        <br>
+                        <input type="number" id="cantidadkg1" name="cantidades" style="width:80px; text-align:center" value="20" min="1" required/>
+                        <label > KG</label>
+                    </TD>
+
+                    <TD WIDTH=100 VALIGN=MIDDLE ALIGN=CENTER>
+                        <br>
+                        <input type="number" id="cantidadkg2" name="cantidades" style="width:80px; text-align:center" value="20" min="1" required/>
+                        <label > KG</label>
+                    </TD>
+                
+                    <TD WIDTH=100 VALIGN=MIDDLE ALIGN=CENTER>
+                        <br>
+                        <input type="number" id="cantidadkg3" name="cantidades" style="width:80px ; text-align:center" value="20" min="1" required/>
+                        <label > KG</label>
+                    </TD>
+
+                    <TD WIDTH=100 VALIGN=MIDDLE ALIGN=CENTER>
+                        <br>
+                        <input type="number" id="cantidadkg4" name="cantidades" style="width:80px; text-align:center" value="20" min="1" required/>
+                        <label > KG</label>
+                    </TD>
+                </TR>
+
             </TABLE>
-            <img src="img/con_2.png" width='250' height='60' ALIGN="right">
-            <br><br><br><br>
             
-            <input type="number" id="cantidadkg" value="20" min="1" required/>
-            <label> Kilogramos (KG)</label>
-            <button  id="solicitar" class="btn btn-primary btn-success" >  <b> Solicitar </b></button>
+            <img src="img/con_2.png" width='250' height='60' ALIGN="right">
+            <br><br>
+            <label ALIGN="right"> Kilogramos (KG)</label>
+            <button  id="solicitar" class="btn btn-primary btn-success" style='width:120px; height:45px'><b>SOLICITAR</b></button>
            
            
         </div>  
@@ -128,14 +158,15 @@
       </div>
         
     </div>
+   
     
     
-    
-    <div class="container">
+    <div class="container" >
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-5" >
             <!-- tablaaaaaaaaaaaaa>-->
+            <h2 class=" animated wobble" ALIGN="center">Peticiones</h2><br>
             <TABLE border="1" id="tablapedidos" >
                 <TR>
                     <TD width=100 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"> 
@@ -161,7 +192,10 @@
           </div>
           <div class="col-md-1"> </div>
           <div class="col-md-6" id="divtablapedidos"> 
+            <h2 class=" animated wobble" ALIGN="center">Inventario por Almacén</h2><br>
+
           <TABLE border="1" id="tablalmacenes"  >
+
                 <TR>
                     <TD width=100 VALIGN=MIDDLE ALIGN=CENTER BGCOLOR="#145A32"> 
                         <h4> - </h4>
@@ -259,12 +293,22 @@
           </div>
       </div>
 
-      <hr>
+     
 
       <footer>
         <p></p>
       </footer>
-    </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+    </div> <!-- /container -->        
+        
+     <br><br> <hr><br><br>
+     <div ALIGN=CENTER>
+        <h2 class=" animated wobble" ALIGN="center">Mapa de Comunicación</h2><br>
+        <img src="img/mapamapa.png" width=85% height=85%>
+     </div>
+
+
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.js"><\/script>')</script>
 
         <script src="js/vendor/bootstrap.min.js"></script>

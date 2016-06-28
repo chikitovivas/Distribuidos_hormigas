@@ -21,6 +21,7 @@ var comidas = [new objetos.comida("Manzana",0), new objetos.comida("Pera",0), ne
 var depositos = [new objetos.deposito(comidas[0],500,150,100), new objetos.deposito(comidas[1],500,150,100), new objetos.deposito(comidas[2],500,150,100)
 , new objetos.deposito(comidas[3],500,150,100), new objetos.deposito(comidas[4],500,150,100)] 
 
+var numconsola = process.argv[2];
 var almacenActual = almacenes[process.argv[2]]; //AQUI
 almacenActual.depositos = depositos;
 var tiposComida = Array();
@@ -62,21 +63,29 @@ eurecaServer.attach(server);
 
 eurecaServer.exports.hormigaLlega = function(hormiga){
 
-	console.log("Llega hormiga");
+	//console.log("Llega hormiga");
 
 	var hor = new objetos.hormiga(hormiga.comida,hormiga.pesoMaximo,hormiga.itinerario,hormiga.pendiente,hormiga.inventario,hormiga.idPeticion);
+	
 
-		//console.log(hor);
 	if(hor.pendiente === 0){
 		hor.inventario[almacenActual.id] = almacenActual;
 		hor.itinerario.next = hor.itinerario.recorrido[hor.itinerario.recorrido.findIndex(function(id){return id == hor.itinerario.next})+1];
 		enviarHormiga(hor);
-		//console.log(hor);
+		
 	}else{
-		//console.log(hor);
+		console.log("- Llegó hormiga para llevar, peticion: "+hor.idPeticion+",comida: "+hor.comida.tipo+",pendiente: "+hor.pendiente);
 		var respuesta = hor.agarrarComida(almacenActual);
 		almacenActual = respuesta.almacen;
-		console.log(almacenActual);
+		//console.log(almacenActual);
+			console.log("- Almacen ",numconsola,":");
+
+		for (var j = 0; j < almacenActual.depositos.length; j++) {
+			console.log("   *"+almacenActual.depositos[j].comida.tipo+": "+almacenActual.depositos[j].cantidadActual);
+		}
+
+
+
 		enviarHormiga(hor);
 		if(respuesta.flag === 1){
 			//mandar a buscar comida a los generadores
@@ -88,12 +97,20 @@ eurecaServer.exports.hormigaLlega = function(hormiga){
 
 eurecaServer.exports.hormigaSuma = function(hormiga){
 	
-	console.log("Llega hormiga");
+	//console.log("Llega hormiga");
 	
 	var hor = new objetos.hormiga(hormiga.comida,hormiga.pesoMaximo,hormiga.itinerario,hormiga.pendiente,hormiga.inventario,hormiga.idPeticion);
+	
+	console.log("- Llegó hormiga para surtir, peticion: "+hor.idPeticion+",comida: "+hor.comida.tipo+",peso: "+hor.comida.peso);
 
 	
-	almacenActual = hor.dejaComida(almacenActual);console.log(almacenActual);
+	almacenActual = hor.dejaComida(almacenActual);
+	console.log("Inventario Resurtido ");
+	console.log("- Almacen ",numconsola,":");
+	for (var j = 0; j < almacenActual.depositos.length; j++) {
+		console.log("   *"+almacenActual.depositos[j].comida.tipo+": "+almacenActual.depositos[j].cantidadActual);
+	}
+
 	//console.log("hormigaSuma, almacenActual", almacenActual); 
 	enviarHormiga(hor);
 

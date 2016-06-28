@@ -45,13 +45,15 @@ eurecaServer.attach(server);
 
 eurecaServer.exports.llegageneradores = function(hormiga){
 
-	console.log("Llega hormiga");
+	
 	var hor = new objetos.hormiga(hormiga.comida,hormiga.pesoMaximo,hormiga.itinerario,hormiga.pendiente,hormiga.inventario,hormiga.idPeticion);
+	//console.log("Llega hormiga");
+	console.log("- Llegó hormiga, peticion: "+hor.idPeticion+",comida: "+hor.comida.tipo+",pendiente: "+hor.pendiente);
 	hor.comida.peso = hor.pendiente;
-	//console.log("soy el peso del fucking gordo",hor.comida.peso);
-	//console.log("soy el pencil",hor.pendiente);
+	console.log("  *Surtió Satisfactoriamente");
 	hor.itinerario.next = hor.itinerario.recorrido[hor.itinerario.recorrido.findIndex(function(id){return id == hor.itinerario.next})+1];
 	enviarHormiga(hor);
+	console.log("");
 }
 
 server.listen(generadordecomidaActual.puerto);

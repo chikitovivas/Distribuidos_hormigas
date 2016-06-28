@@ -20,51 +20,60 @@ var html = fs.readFileSync("../public/index.html");
 		Inicializacion de los depositos
 */
 var hormiguero = new Eureca.Client({ uri: 'http://localhost:8200/' });
+//var hormiguero = new Eureca.Client({ uri: 'http://192.168.110.106:8200/' });
 var serverProxy;
 hormiguero.ready(function (serverProx) {
 	serverProxy = serverProx;
 });
 var client = new Eureca.Client({ uri: 'http://localhost:'+almacenes[0].puerto+'/' });
+//var client = new Eureca.Client({ uri: 'http://192.168.110.101:'+almacenes[0].puerto+'/' });
 var almacenProxy0;
 client.ready(function (serverProx) {
 	almacenProxy0 = serverProx;
 });
 var client1 = new Eureca.Client({ uri: 'http://localhost:'+almacenes[1].puerto+'/' });
+//var client1 = new Eureca.Client({ uri: 'http://192.168.110.101:'+almacenes[1].puerto+'/' });
 var almacenProxy1;
 client1.ready(function (serverProx) {
 	almacenProxy1 = serverProx;
 });
 var client2 = new Eureca.Client({ uri: 'http://localhost:'+almacenes[2].puerto+'/' });
+//var client2 = new Eureca.Client({ uri: 'http://192.168.110.101:'+almacenes[2].puerto+'/' });
 var almacenProxy2;
 client2.ready(function (serverProx) {
 	almacenProxy2 = serverProx;
 	
 });
 var client3 = new Eureca.Client({ uri: 'http://localhost:'+generadoresdecomida[0].puerto+'/' });
+//var client3 = new Eureca.Client({ uri: 'http://192.168.110.104:'+generadoresdecomida[0].puerto+'/' });
 var almacenProxy3;
 client3.ready(function (serverProx) {
 	almacenProxy3 = serverProx;
 	
 });
 var client4 = new Eureca.Client({ uri: 'http://localhost:'+generadoresdecomida[1].puerto+'/' });
+//var client4 = new Eureca.Client({ uri: 'http://192.168.110.104:'+generadoresdecomida[1].puerto+'/' });
 var almacenProxy4;
 client4.ready(function (serverProx) {
 	almacenProxy4 = serverProx;
 	
 });
 var client5 = new Eureca.Client({ uri: 'http://localhost:'+generadoresdecomida[2].puerto+'/' });
+//var client5 = new Eureca.Client({ uri: 'http://192.168.110.104:'+generadoresdecomida[2].puerto+'/' });
 var almacenProxy5;
 client5.ready(function (serverProx) {
 	almacenProxy5 = serverProx;
 	
 });
 var client6 = new Eureca.Client({ uri: 'http://localhost:'+generadoresdecomida[3].puerto+'/' });
+//var client6 = new Eureca.Client({ uri: 'http://192.168.110.104:'+generadoresdecomida[3].puerto+'/' });
 var almacenProxy6;
 client6.ready(function (serverProx) {
 	almacenProxy6 = serverProx;
 	
 });
 var client7 = new Eureca.Client({ uri: 'http://localhost:'+generadoresdecomida[4].puerto+'/' });
+//var client7 = new Eureca.Client({ uri: 'http://192.168.110.104:'+generadoresdecomida[4].puerto+'/' });
 var almacenProxy7;
 client7.ready(function (serverProx) {
 	almacenProxy7 = serverProx;
@@ -74,9 +83,9 @@ client7.ready(function (serverProx) {
 
 inicializarAlmacenes();
 
-app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
+//app.use(express.static('C:/Users/Usuario/Desktop/Distribuidos_node/public'));
 
-//app.use(express.static('C:/Users/Administrador/Documents/NetBeansProjects/Distribuidos_hormigas/public'));
+app.use(express.static('C:/Users/Administrador/Documents/NetBeansProjects/Distribuidos_hormigas/public'));
 
 var peticionesReina = new Array();
 var cantidadPeticiones = 0;
@@ -101,7 +110,7 @@ app.listen(8100,function(){
 		peticionesReina[peticionActual] = new objetos.peticiones(opciones.id, 1, comidas);	
 		cantidadPeticiones++;
 		
-		console.log(peticionesReina[peticionActual]);			
+		//console.log(peticionesReina[peticionActual]);			
 
 		for (var i = comidas.length - 1; i >= 0; i--) {
 			var flag = 1;
@@ -135,7 +144,8 @@ app.listen(8100,function(){
 				*/
 				var hormiga = new objetos.hormiga(new objetos.comida(comidas[i].tipo+"",0), pesoHormiga, funciones.crearItinerario2(almacenes,pesoHormiga,comidas[i].tipo,0,0), pesoHormiga, [null,null,null],opciones.id);	
 				enviarHormiga(hormiga);//envia la hormiga al respectivo almacen
-				console.log(hormiga.itinerario);//se imprime el itinerario de la homiga
+				
+				//console.log(hormiga.itinerario);//se imprime el itinerario de la homiga
 				if(faltante === 0){
 					flag = 0;
 				}
@@ -175,8 +185,19 @@ eurecaServer.onDisconnect(function (connection) {
 var sumar = 0;
 //functions under "exports" namespace will be exposed to client side
 eurecaServer.exports.hormigaLlegaFull = function (hormiga) {
+
+	console.log("- Llegó hormiga, peticion: "+hormiga.idPeticion+",comida: "+hormiga.comida.tipo+",peso: "+hormiga.comida.peso);
 	actualizarAlmacenes(hormiga);
 	buscarPeticion(hormiga,eventoLlegaHormiga);
+	console.log("  *Inventario:");
+	for (var i = 0; i < almacenes.length; i++) {
+			console.log("    -Almacen ",i+1,":");
+		for (var j = 0; j < almacenes[i].depositos.length; j++) {
+			
+			console.log("       "+almacenes[i].depositos[j].comida.tipo+": "+almacenes[i].depositos[j].cantidadActual);
+		}
+	}
+	
 };
 
 eurecaServer.exports.hormigaGeneradores = function (almacen_peticion,cantidad_peticion,tipocomida_peticion) {
@@ -187,11 +208,11 @@ eurecaServer.exports.hormigaGeneradores = function (almacen_peticion,cantidad_pe
 var tchatServer = eurecaServer.exports.tchatServer = {};
 
 tchatServer.browser = function () {
-	console.log('Client %s auth with %s', this.connection.id);
+	//console.log('Client %s auth with %s', this.connection.id);
 	var id = this.connection.id;
 
 	browser = id;
-	console.log(almacenes);
+	//console.log(almacenes);
 	return almacenes;
 };
 
@@ -231,24 +252,32 @@ function enviarHormiga(hormiga){
 	if(hormiga.itinerario.next === 3){ //servidor
 			serverProxy.hormigaLlegaFull(hormiga);
 	}else if(hormiga.itinerario.next === 0){// almacen 0
+		    console.log("- Salió hormiga para almacenes, peticion: "+hormiga.idPeticion+",comida: "+hormiga.comida.tipo+",pendiente: "+hormiga.pendiente);
 			almacenProxy0.hormigaLlega(hormiga);
 	}else if(hormiga.itinerario.next === 1){	// almacen 1
+		    console.log("- Salió hormiga para almacenes, peticion: "+hormiga.idPeticion+",comida: "+hormiga.comida.tipo+",pendiente: "+hormiga.pendiente);
 			almacenProxy1.hormigaLlega(hormiga);
 	}else if(hormiga.itinerario.next === 2){	// almacen 2
+		    console.log("- Salió hormiga para almacenes, peticion: "+hormiga.idPeticion+",comida: "+hormiga.comida.tipo+",pendiente: "+hormiga.pendiente);
 			almacenProxy2.hormigaLlega(hormiga);
 	}else if(hormiga.itinerario.next === 10){	// generador manzana
+		    console.log("- Salió hormiga para generador, peticion: "+hormiga.idPeticion+",comida: "+hormiga.comida.tipo+",pendiente: "+hormiga.pendiente);
 			almacenProxy3.llegageneradores(hormiga);
 	}
 	else if(hormiga.itinerario.next === 11){	// generador pera
+		    console.log("- Salió hormiga para generador, peticion: "+hormiga.idPeticion+",comida: "+hormiga.comida.tipo+",pendiente: "+hormiga.pendiente);
 			almacenProxy4.llegageneradores(hormiga);
 	}
 	else if(hormiga.itinerario.next === 12){	// generador naranja
+		    console.log("- Salió hormiga para generador, peticion: "+hormiga.idPeticion+",comida: "+hormiga.comida.tipo+",pendiente: "+hormiga.pendiente);
 			almacenProxy5.llegageneradores(hormiga);
 	}
 	else if(hormiga.itinerario.next === 13){	// generador patilla
+		    console.log("- Salió hormiga para generador, peticion: "+hormiga.idPeticion+",comida: "+hormiga.comida.tipo+",pendiente: "+hormiga.pendiente);
 			almacenProxy6.llegageneradores(hormiga);
 	}
 	else if(hormiga.itinerario.next === 14){	// generador banana
+		    console.log("- Salió hormiga para generador, peticion: "+hormiga.idPeticion+",comida: "+hormiga.comida.tipo+",pendiente: "+hormiga.pendiente);
 			almacenProxy7.llegageneradores(hormiga);
 	}
 
@@ -289,24 +318,24 @@ function eventoLlegaHormiga(i,hormiga){
 	peticionesReina[i].cantidadHormigas--;
 	cantidadHormigasActivas--;
 	peticionesReina[i].cantidadComidaLlegando += hormiga.comida.peso;
-	console.log(peticionesReina[i].cantidadHormigas + "i");
-	console.log(hormiga);
-	console.log(sumar);
+	//console.log(peticionesReina[i].cantidadHormigas + "i");
+	//console.log(hormiga);
+	//console.log(sumar);
 	if(peticionesReina[i].cantidadHormigas === 1  ){
-		console.log("Ya llegaron todas las hormigas con carga");
+		//console.log("Ya llegaron todas las hormigas con carga");
 		cantidadHormigasActivas++;
 		var hormigaEspecial = new objetos.hormiga(new objetos.comida(hormiga.comida.tipo+"",0), 0, new objetos.itinerario([0,1,2,3]) , 0, [null,null,null],hormiga.idPeticion);	
 		enviarHormiga(hormigaEspecial);
 		if(hormiga.idPeticion >= 10000){
-			console.log(hormiga.idPeticion);
-			console.log(hormiga.itinerario.recorrido[1]);
+			//console.log(hormiga.idPeticion);
+			//console.log(hormiga.itinerario.recorrido[1]);
 			restaurarAlmacen(hormiga.itinerario.recorrido[1],hormiga.comida.tipo);
 		}
 	}
 	if(peticionesReina[i].cantidadHormigas === 0){
-		console.log("Ya llego hormiga especial");
+		//console.log("Ya llego hormiga especial");
 		connections[browser].client.tchat.peticionlista(hormiga.inventario, peticionesReina[i]);
-		console.log(JSON.stringify(peticionesReina[i]));
+		//console.log(JSON.stringify(peticionesReina[i]));
 	}
 }
 
@@ -323,8 +352,8 @@ function generarPeticion(almacen_peticion,cantidad_peticion,tipocomida_peticion)
 
 		peticionesReina[peticionActual] = new objetos.peticiones(num_peticiones, 1, objetoComida);	
 		cantidadPeticiones++;
-		console.log(cantidad_peticion);
-		console.log(peticionesReina[peticionActual]);
+		//console.log(cantidad_peticion);
+		//console.log(peticionesReina[peticionActual]);
 
 		while(flag){
 			var pedir0 = Math.floor(Math.random() * (1 - 1) + 1);
@@ -354,10 +383,10 @@ function generarPeticion(almacen_peticion,cantidad_peticion,tipocomida_peticion)
 			var hormiga = new objetos.hormiga(new objetos.comida(tipocomida_peticion+"",0), pendiente, funciones.crearItinerario2(generadoresdecomida,pendiente,tipocomida_peticion,1,almacen_peticion), pendiente, [null,null,null],peticionesReina[peticionActual].id);	
 			//var hormiga = new objetos.hormiga(comida, pendiente, funciones.crearItinerario(almacenes,pendiente,opciones.comida), pendiente, [null,null,null],opciones.id);	
 			enviarHormiga(hormiga); //envia la hormiga a la respectiva ruta
-			console.log(hormiga.itinerario); //se imprime el itinerario de la homiga
+			//console.log(hormiga.itinerario); //se imprime el itinerario de la homiga
 			suma += pendiente;
-			console.log(faltante);
-			console.log(suma);
+			//console.log(faltante);
+			//console.log(suma);
 			if(faltante === 0)
 				flag = 0;
 			
