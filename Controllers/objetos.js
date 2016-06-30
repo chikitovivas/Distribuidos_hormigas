@@ -46,12 +46,25 @@ hormiga.prototype.agarrarComida = function (almacen) {
 hormiga.prototype.dejaComida = function (almacen){
 	for (var i = almacen.depositos.length - 1; i >= 0; i--) {
 		if(almacen.depositos[i].comida.tipo === this.comida.tipo){
-			almacen.depositos[i].cantidadActual += this.comida.peso; 
-			this.comida.peso=0;
-			this.inventario[almacen.id] = almacen;
-			that=this;
-			this.itinerario.next = this.itinerario.recorrido[this.itinerario.recorrido.findIndex(function(id){return id == that.itinerario.next})+1];
-			
+			if ((almacen.depositos[i].cantidadActual+this.comida.peso)<=almacen.depositos[i].capacidadMaxima){
+				almacen.depositos[i].cantidadActual += this.comida.peso; 
+				this.comida.peso=0;
+				this.inventario[almacen.id] = almacen;
+				that=this;
+				this.itinerario.next = this.itinerario.recorrido[this.itinerario.recorrido.findIndex(function(id){return id == that.itinerario.next})+1];
+			}
+			else{
+				if(almacen.depositos[i].cantidadActual!==almacen.depositos[i].capacidadMaxima){
+					var resultado = almacen.depositos[i].capacidadMaxima-almacen.depositos[i].cantidadActual;
+
+					almacen.depositos[i].cantidadActual += resultado; 
+					this.comida.peso-=resultado;
+					this.inventario[almacen.id] = almacen;
+					that=this;
+					this.itinerario.next = this.itinerario.recorrido[this.itinerario.recorrido.findIndex(function(id){return id == that.itinerario.next})+1];
+				
+				}
+			}
 		}
 	}
 	return almacen;
